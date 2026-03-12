@@ -1,0 +1,8 @@
+version: 5.0.0
+files:
+  - url: MIAU-Browser-Setup-5.0.0.exe
+    sha512: BjOub34DU00fdvAEW3yb33axPcKzuxbggCqf3Yg+nANEwU0jXBw+mbN7jf1ucRodZ9lg9zVO3bkRS0Rh3L6rLA==
+    size: 83329655
+path: MIAU-Browser-Setup-5.0.0.exe
+sha512: BjOub34DU00fdvAEW3yb33axPcKzuxbggCqf3Yg+nANEwU0jXBw+mbN7jf1ucRodZ9lg9zVO3bkRS0Rh3L6rLA==
+releaseDate: '2026-03-11T22:03:05.271Z'
