@@ -1,0 +1,2885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MIAU Browser</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   THEMES — body[data-theme] approach (old style)
+══════════════════════════════════════════════ */
+body[data-theme="green"]{--bg:#000;--bg2:#050a05;--panel:#080f08;--panel2:#0c120c;--border:#1a3a1a;--accent:#00ff41;--accent2:#00cc33;--accent3:#003300;--dim:#004400;--muted:#336633;--red:#ff0040;--matrix:#00ff41;}
+body[data-theme="purple"]{--bg:#05000f;--bg2:#0a0020;--panel:#0d0025;--panel2:#110030;--border:#2a0055;--accent:#cc00ff;--accent2:#9900cc;--accent3:#1a0033;--dim:#330055;--muted:#550088;--red:#ff0040;--matrix:#cc00ff;}
+body[data-theme="blue"]{--bg:#000510;--bg2:#001020;--panel:#001530;--panel2:#001a38;--border:#003366;--accent:#00b8ff;--accent2:#0088cc;--accent3:#001133;--dim:#003366;--muted:#224488;--red:#ff0040;--matrix:#00b8ff;}
+body[data-theme="red"]{--bg:#0f0000;--bg2:#200005;--panel:#250008;--panel2:#2a000a;--border:#550010;--accent:#ff2040;--accent2:#cc0030;--accent3:#330010;--dim:#440010;--muted:#660020;--red:#ff6060;--matrix:#ff2040;}
+body[data-theme="pink"]{--bg:#0f0008;--bg2:#1a0010;--panel:#200015;--panel2:#25001a;--border:#6a0040;--accent:#ff69b4;--accent2:#ff1493;--accent3:#3d0020;--dim:#5a0030;--muted:#8b3060;--red:#ff4444;--matrix:#ff69b4;}
+body[data-theme="orange"]{--bg:#0f0600;--bg2:#1a0a00;--panel:#200d00;--panel2:#261000;--border:#6a3000;--accent:#ff8c00;--accent2:#ff6600;--accent3:#3d1800;--dim:#552200;--muted:#884400;--red:#ff2020;--matrix:#ff8c00;}
+body[data-theme="cyan"]{--bg:#000f10;--bg2:#001a1c;--panel:#002022;--panel2:#002528;--border:#005a60;--accent:#00fff5;--accent2:#00cccc;--accent3:#003336;--dim:#004448;--muted:#2a7a80;--red:#ff0040;--matrix:#00fff5;}
+body[data-theme="gold"]{--bg:#0a0800;--bg2:#141000;--panel:#1a1400;--panel2:#201800;--border:#5a4400;--accent:#ffd700;--accent2:#ffaa00;--accent3:#332600;--dim:#443300;--muted:#806600;--red:#ff4040;--matrix:#ffd700;}
+body[data-theme="neon"]{--bg:#050005;--bg2:#0a000a;--panel:#0d000d;--panel2:#100010;--border:#550055;--accent:#ff00ff;--accent2:#cc00cc;--accent3:#2d002d;--dim:#440044;--muted:#772277;--red:#ff0040;--matrix:#ff00ff;}
+body[data-theme="vanta"]{--bg:#000305;--bg2:#020810;--panel:#030d18;--panel2:#041020;--border:#0a2040;--accent:#4fc3f7;--accent2:#0288d1;--accent3:#071830;--dim:#0a2035;--muted:#1a4060;--red:#ff1744;--matrix:#4fc3f7;}
+body[data-theme="ember"]{--bg:#080200;--bg2:#100400;--panel:#160600;--panel2:#1c0800;--border:#5c1a00;--accent:#ff6b1a;--accent2:#e64a00;--accent3:#2a0d00;--dim:#3d1200;--muted:#7a2e00;--red:#ff1744;--matrix:#ff6b1a;}
+body[data-theme="specter"]{--bg:#000800;--bg2:#001200;--panel:#001800;--panel2:#001e00;--border:#004d00;--accent:#39ff14;--accent2:#00cc00;--accent3:#001a00;--dim:#003300;--muted:#1a5c00;--red:#ff0040;--matrix:#39ff14;}
+body[data-theme="violet"]{--bg:#0c0015;--bg2:#160020;--panel:#1e002e;--panel2:#240038;--border:#3d0066;--accent:#aa00ff;--accent2:#8800dd;--accent3:#1a0033;--dim:#2d0055;--muted:#6600aa;--red:#ff0040;--matrix:#aa00ff;}
+body[data-theme="blood"]{--bg:#0a0000;--bg2:#180000;--panel:#200000;--panel2:#260000;--border:#440000;--accent:#ff3333;--accent2:#cc0000;--accent3:#1a0000;--dim:#330000;--muted:#660000;--red:#ff6060;--matrix:#ff3333;}
+body[data-theme="black-gold"]{--bg:#090700;--bg2:#130f00;--panel:#1e1700;--panel2:#241c00;--border:#3d2e00;--accent:#ffd700;--accent2:#cc9900;--accent3:#1a1200;--dim:#2e2200;--muted:#665500;--red:#ff4040;--matrix:#ffd700;}
+body[data-theme="matrix-black"]{--bg:#000;--bg2:#001400;--panel:#002200;--panel2:#002800;--border:#004400;--accent:#00ff41;--accent2:#00cc33;--accent3:#001100;--dim:#003300;--muted:#006600;--red:#ff0040;--matrix:#00ff41;}
+/* ── LIGHT THEMES ── */
+body[data-theme="light"]{--bg:#f0f4f8;--bg2:#e2e8f0;--panel:#fff;--panel2:#f8fafc;--border:#cbd5e1;--accent:#1a56db;--accent2:#1e40af;--accent3:#dbeafe;--dim:#93aed6;--muted:#64748b;--red:#dc2626;--matrix:#1a56db;}
+body[data-theme="light-pink"]{--bg:#fff0f6;--bg2:#ffe4f0;--panel:#fff;--panel2:#fff5f9;--border:#f9a8d4;--accent:#db2777;--accent2:#be185d;--accent3:#fce7f3;--dim:#f472b6;--muted:#9d174d;--red:#dc2626;--matrix:#db2777;}
+body[data-theme="light-mint"]{--bg:#f0fdf9;--bg2:#ccfbf1;--panel:#fff;--panel2:#f0fdfa;--border:#99f6e4;--accent:#0d9488;--accent2:#0f766e;--accent3:#ccfbf1;--dim:#5eead4;--muted:#134e4a;--red:#dc2626;--matrix:#0d9488;}
+body[data-theme="light-lavender"]{--bg:#f5f3ff;--bg2:#ede9fe;--panel:#fff;--panel2:#f5f3ff;--border:#c4b5fd;--accent:#7c3aed;--accent2:#6d28d9;--accent3:#ede9fe;--dim:#a78bfa;--muted:#4c1d95;--red:#dc2626;--matrix:#7c3aed;}
+body[data-theme="light-gold"]{--bg:#fffbeb;--bg2:#fef3c7;--panel:#fff;--panel2:#fffdf5;--border:#fcd34d;--accent:#b45309;--accent2:#92400e;--accent3:#fef3c7;--dim:#f59e0b;--muted:#78350f;--red:#dc2626;--matrix:#b45309;}
+body[data-theme="snow"]{--bg:#f8f9fa;--bg2:#fff;--panel:#fff;--panel2:#f0f4f8;--border:#ced4da;--accent:#4c6ef5;--accent2:#3b5bdb;--accent3:#e7f5ff;--dim:#a5b4fc;--muted:#6c757d;--red:#dc2626;--matrix:#4c6ef5;}
+body[data-theme="cream"]{--bg:#fdf6e3;--bg2:#fffbf0;--panel:#fff;--panel2:#f5ead0;--border:#ddc99a;--accent:#c97a00;--accent2:#a06000;--accent3:#fef3c7;--dim:#d4a844;--muted:#8a6e3a;--red:#dc2626;--matrix:#c97a00;}
+
+/* ── HACKER / SİBER GÜVENLİK ── */
+body[data-theme="kali"]{--bg:#1a0030;--bg2:#220040;--panel:#2a0050;--panel2:#300060;--border:#5500aa;--accent:#a855f7;--accent2:#7c3aed;--accent3:#3b0080;--dim:#4c1d95;--muted:#7c3aed;--red:#ff2d55;--matrix:#a855f7;}
+body[data-theme="parrot"]{--bg:#001a0d;--bg2:#002614;--panel:#00301a;--panel2:#003d20;--border:#00aa55;--accent:#00ff88;--accent2:#00cc66;--accent3:#004422;--dim:#006633;--muted:#339966;--red:#ff3366;--matrix:#00ff88;}
+body[data-theme="tails"]{--bg:#0a0a1a;--bg2:#10102a;--panel:#15153a;--panel2:#1a1a44;--border:#3333aa;--accent:#8888ff;--accent2:#6666ee;--accent3:#1a1a55;--dim:#2a2a77;--muted:#5555bb;--red:#ff4466;--matrix:#8888ff;}
+
+/* ── UZAY / KOZMİK ── */
+body[data-theme="nebula"]{--bg:#0d001a;--bg2:#150025;--panel:#1c0033;--panel2:#220040;--border:#660099;--accent:#cc44ff;--accent2:#9911dd;--accent3:#2d0055;--dim:#440077;--muted:#8833bb;--red:#ff2255;--matrix:#cc44ff;}
+body[data-theme="deepspace"]{--bg:#000308;--bg2:#000510;--panel:#000818;--panel2:#000a20;--border:#001155;--accent:#4488ff;--accent2:#2255dd;--accent3:#000830;--dim:#001040;--muted:#223388;--red:#ff2244;--matrix:#4488ff;}
+body[data-theme="mars"]{--bg:#1a0800;--bg2:#2a1000;--panel:#361500;--panel2:#421a00;--border:#884400;--accent:#ff6622;--accent2:#dd4400;--accent3:#3d1500;--dim:#662200;--muted:#994422;--red:#ff2200;--matrix:#ff6622;}
+
+/* ── GRADIENT / NEON ── */
+body[data-theme="synthwave"]{--bg:#0d0020;--bg2:#150030;--panel:#1c0040;--panel2:#220050;--border:#770055;--accent:#ff44cc;--accent2:#cc0099;--accent3:#330022;--dim:#550044;--muted:#993377;--red:#ff0055;--matrix:#ff44cc;}
+body[data-theme="aurora"]{--bg:#000f08;--bg2:#001510;--panel:#001c16;--panel2:#002318;--border:#006644;--accent:#44ffcc;--accent2:#00ddaa;--accent3:#003322;--dim:#004433;--muted:#228866;--red:#ff3355;--matrix:#44ffcc;}
+body[data-theme="hologram"]{--bg:#000818;--bg2:#001020;--panel:#001530;--panel2:#001a38;--border:#004488;--accent:#00ccff;--accent2:#0099dd;--accent3:#001133;--dim:#002255;--muted:#226699;--red:#ff2244;--matrix:#00ccff;}
+
+/* ── ŞEHİR ── */
+body[data-theme="tokyo-dark"]{--bg:#0a0015;--bg2:#110020;--panel:#180030;--panel2:#1e0038;--border:#cc0055;--accent:#ff0066;--accent2:#cc0044;--accent3:#330015;--dim:#550022;--muted:#993355;--red:#ff2244;--matrix:#ff0066;}
+body[data-theme="tokyo-light"]{--bg:#fff0f5;--bg2:#ffe0ec;--panel:#fff;--panel2:#fff5f8;--border:#ffb3cc;--accent:#ff0066;--accent2:#cc0044;--accent3:#ffe0ec;--dim:#ff80aa;--muted:#cc3366;--red:#dc2626;--matrix:#ff0066;}
+body[data-theme="telaviv-night"]{--bg:#000c1a;--bg2:#001428;--panel:#001c38;--panel2:#002244;--border:#004488;--accent:#00aaff;--accent2:#0077dd;--accent3:#001530;--dim:#003366;--muted:#225588;--red:#ff2244;--matrix:#ffd700;}
+body[data-theme="telaviv-sunset"]{--bg:#1a0800;--bg2:#2a1205;--panel:#361800;--panel2:#421e00;--border:#cc5500;--accent:#ff8833;--accent2:#ff6600;--accent3:#3d1500;--dim:#882200;--muted:#cc5522;--red:#ff2244;--matrix:#ff8833;}
+/* ── KUDÜS ── */
+body[data-theme="jerusalem-night"]{--bg:#080510;--bg2:#0e0a1a;--panel:#130c22;--panel2:#180f2a;--border:#4a3200;--accent:#c8941a;--accent2:#e6a820;--accent3:#1a1000;--dim:#3d2800;--muted:#7a5a18;--red:#ff2244;--matrix:#c8941a;}
+body[data-theme="jerusalem-gold"]{--bg:#fdf6e3;--bg2:#f5e8c0;--panel:#fff9ee;--panel2:#fffdf5;--border:#c8941a;--accent:#8b5e00;--accent2:#a67000;--accent3:#f5e8c0;--dim:#c8a84b;--muted:#8b6914;--red:#dc2626;--matrix:#8b5e00;}
+
+/* ── TATLI / ŞİRİN — LIGHT ── */
+body[data-theme="sakura-light"]{--bg:#fff5f8;--bg2:#ffe8f0;--panel:#fff;--panel2:#fff0f5;--border:#ffb3cc;--accent:#ff6699;--accent2:#ff3366;--accent3:#ffe0ec;--dim:#ffaacc;--muted:#cc6688;--red:#dc2626;--matrix:#ff6699;--petal:#ffb3cc;--petal2:#ff80aa;--petal3:#ffd6e8;}
+body[data-theme="dreamy-light"]{--bg:#f5f0ff;--bg2:#ede0ff;--panel:#fff;--panel2:#f8f0ff;--border:#ccaaff;--accent:#9966ff;--accent2:#7733ee;--accent3:#e8d5ff;--dim:#bb99ff;--muted:#9966cc;--red:#dc2626;--matrix:#9966ff;--petal:#ccaaff;--petal2:#aa88ff;--petal3:#eeddff;}
+body[data-theme="cottagecore-light"]{--bg:#f5f0e8;--bg2:#ede5d8;--panel:#fff;--panel2:#f8f4ee;--border:#c8a87a;--accent:#8b5e3c;--accent2:#6b4423;--accent3:#f0e6d0;--dim:#c4a882;--muted:#8b7355;--red:#dc2626;--matrix:#8b5e3c;--petal:#d4a96a;--petal2:#c8915a;--petal3:#e8d5b0;}
+
+/* ── TATLI / ŞİRİN — BEYAZ PASTEL ── */
+body[data-theme="sky"]{--bg:#f0f8ff;--bg2:#e0f0ff;--panel:#fff;--panel2:#f5fbff;--border:#99ccff;--accent:#3399ff;--accent2:#0066dd;--accent3:#cce8ff;--dim:#88bbff;--muted:#5588bb;--red:#dc2626;--matrix:#3399ff;--petal:#99ccff;--petal2:#66aaff;--petal3:#cce8ff;}
+body[data-theme="lavender"]{--bg:#f8f5ff;--bg2:#f0eaff;--panel:#fff;--panel2:#faf7ff;--border:#cc99ff;--accent:#9955ee;--accent2:#7722cc;--accent3:#e8d8ff;--dim:#bb88ff;--muted:#8855bb;--red:#dc2626;--matrix:#9955ee;--petal:#cc99ff;--petal2:#aa77ee;--petal3:#e8d8ff;}
+body[data-theme="peach"]{--bg:#fff8f3;--bg2:#ffeeE4;--panel:#fff;--panel2:#fffaf6;--border:#ffbb88;--accent:#ff7733;--accent2:#ee5500;--accent3:#ffe4cc;--dim:#ffaa66;--muted:#cc7744;--red:#dc2626;--matrix:#ff7733;--petal:#ffbb88;--petal2:#ff9955;--petal3:#ffe4cc;}
+body[data-theme="mint"]{--bg:#f3fff8;--bg2:#e4fff0;--panel:#fff;--panel2:#f6fffb;--border:#88ddaa;--accent:#22aa66;--accent2:#008844;--accent3:#ccffdd;--dim:#66cc88;--muted:#449966;--red:#dc2626;--matrix:#22aa66;--petal:#88ddaa;--petal2:#55bb88;--petal3:#ccffdd;}
+
+/* ── TATLI / ŞİRİN — DARK ── */
+body[data-theme="sakura-dark"]{--bg:#0f0008;--bg2:#1a0012;--panel:#220018;--panel2:#2a001e;--border:#880044;--accent:#ff6699;--accent2:#ff3366;--accent3:#440022;--dim:#660033;--muted:#994466;--red:#ff4466;--matrix:#ff6699;--petal:#ff99bb;--petal2:#ff6699;--petal3:#ffccdd;}
+body[data-theme="dreamy-dark"]{--bg:#0c0018;--bg2:#140022;--panel:#1c002e;--panel2:#22003a;--border:#550099;--accent:#cc88ff;--accent2:#aa55ff;--accent3:#2a0055;--dim:#440077;--muted:#8855aa;--red:#ff4466;--matrix:#cc88ff;--petal:#ddaaff;--petal2:#cc88ff;--petal3:#eeccff;}
+body[data-theme="cottagecore-dark"]{--bg:#0a0800;--bg2:#151000;--panel:#1e1600;--panel2:#262000;--border:#6b4a1a;--accent:#d4a96a;--accent2:#c8915a;--accent3:#2e2000;--dim:#4a3010;--muted:#8b6535;--red:#ff4444;--matrix:#d4a96a;--petal:#e8c88a;--petal2:#d4a96a;--petal3:#f0ddb0;}
+
+/* ── TATLI ANIMASYON — kiraz çiçeği / yıldız / yaprak ── */
+/* ══ TAB MUTE ══════════════════════════════════ */
+.tab-mute{font-size:11px;cursor:pointer;opacity:.7;flex-shrink:0;padding:0 2px}
+.tab-mute:hover{opacity:1}
+
+/* ══ QUICK ACCESS (Başlangıç sayfası özelleştirme) ══ */
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px;position:relative;z-index:1}
+.qa-item{
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:10px 6px;border:1px solid var(--border);border-radius:6px;
+  cursor:pointer;transition:all .15s;background:var(--panel);
+  text-decoration:none;
+}
+.qa-item:hover{border-color:var(--accent);background:var(--panel2);transform:translateY(-2px)}
+.qa-favicon{width:24px;height:24px;object-fit:contain}
+.qa-label{font-size:10px;color:var(--muted);text-align:center;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qa-add{border-style:dashed;color:var(--dim)}
+.qa-add:hover{color:var(--accent)}
+.qa-add-icon{font-size:20px;color:var(--dim)}
+/* ══════════════════════════════════════════════ */
+#zoom-display{
+  font-family:'Share Tech Mono',monospace;font-size:10px;
+  color:var(--muted);border:1px solid var(--border);
+  border-radius:3px;padding:0 6px;height:28px;
+  display:flex;align-items:center;cursor:pointer;
+  transition:all .15s;white-space:nowrap;flex-shrink:0;
+  min-width:38px;justify-content:center;
+}
+#zoom-display:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ══ PROGRESS BAR ══════════════════════════════════ */
+#load-progress{
+  height:2px;width:100%;background:transparent;flex-shrink:0;overflow:hidden;
+}
+#load-progress-bar{
+  height:100%;width:0%;background:var(--accent);
+  transition:width .2s ease,opacity .3s;
+  box-shadow:0 0 8px var(--accent);
+  opacity:0;
+}
+#load-progress-bar.loading{opacity:1}
+
+/* ══ TAB TOOLTIP ═══════════════════════════════════ */
+#tab-tooltip{
+  position:fixed;z-index:9998;
+  background:var(--panel2);border:1px solid var(--border);
+  color:var(--accent);font-family:'Share Tech Mono',monospace;
+  font-size:11px;padding:4px 8px;border-radius:3px;
+  pointer-events:none;white-space:nowrap;max-width:320px;
+  overflow:hidden;text-overflow:ellipsis;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+#tab-tooltip.hidden{display:none}
+
+/* ══ HELP OVERLAY ══════════════════════════════════ */
+#help-overlay{
+  position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,.85);display:flex;
+  align-items:center;justify-content:center;
+}
+#help-overlay.hidden{display:none}
+#help-box{
+  background:var(--panel);border:1px solid var(--accent2);
+  border-radius:8px;padding:24px 32px;max-width:520px;width:90%;
+  max-height:80vh;overflow-y:auto;
+}
+#help-box h2{
+  font-family:'Orbitron',monospace;color:var(--accent);
+  font-size:16px;letter-spacing:4px;margin-bottom:18px;
+  text-shadow:0 0 10px var(--accent);
+}
+.help-section{margin-bottom:14px}
+.help-section-title{font-size:10px;color:var(--accent2);letter-spacing:3px;margin-bottom:6px}
+.help-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--border)}
+.help-key{
+  background:var(--bg);border:1px solid var(--border);
+  color:var(--accent);font-size:10px;padding:2px 6px;
+  border-radius:3px;white-space:nowrap;flex-shrink:0;
+}
+.help-desc{font-size:11px;color:var(--muted);margin-right:12px}
+#help-close{
+  display:block;width:100%;margin-top:16px;
+  background:transparent;border:1px solid var(--accent2);
+  color:var(--accent);font-family:'Share Tech Mono',monospace;
+  font-size:12px;padding:8px;border-radius:4px;cursor:pointer;
+  transition:all .15s;
+}
+#help-close:hover{background:var(--accent);color:#000}
+
+/* ══ WEBVIEW FULLSCREEN ═════════════════════════════ */
+body.wv-fullscreen #titlebar,
+body.wv-fullscreen #tabbar,
+body.wv-fullscreen #toolbar,
+body.wv-fullscreen #find-bar,
+body.wv-fullscreen #load-progress{display:none!important}
+body.wv-fullscreen #shell{background:#000}
+body.wv-fullscreen webview{position:fixed!important;inset:0!important;z-index:9999!important;width:100vw!important;height:100vh!important}
+
+#find-bar{
+  display:flex;align-items:center;gap:6px;flex-shrink:0;
+  background:var(--panel2);border-bottom:2px solid var(--accent);
+  padding:5px 12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.4);
+  animation:findSlide .15s ease-out;
+}
+@keyframes findSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+#find-bar.hidden{display:none}
+#find-input{
+  background:var(--bg);border:1px solid var(--border);
+  color:var(--accent);font-family:'Share Tech Mono',monospace;
+  font-size:12px;padding:3px 8px;border-radius:3px;outline:none;
+  width:180px;
+}
+#find-input:focus{border-color:var(--accent)}
+.find-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);font-size:11px;cursor:pointer;
+  padding:3px 7px;border-radius:3px;transition:all .12s;
+}
+.find-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ══ CONTEXT MENU ══════════════════════════════════ */
+#ctx-menu{
+  position:fixed;z-index:9999;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:5px;min-width:170px;padding:4px 0;
+  box-shadow:0 8px 30px rgba(0,0,0,.6);
+  font-family:'Share Tech Mono',monospace;font-size:12px;
+}
+#ctx-menu.hidden{display:none}
+.ctx-item{
+  padding:7px 14px;color:var(--muted);cursor:pointer;
+  transition:background .1s,color .1s;white-space:nowrap;
+}
+.ctx-item:hover{background:var(--accent3);color:var(--accent)}
+.ctx-sep{height:1px;background:var(--border);margin:3px 0}
+
+/* ══ FAVICON IN TABS ══════════════════════════════ */
+.tab-favicon{width:14px;height:14px;object-fit:contain;border-radius:2px;flex-shrink:0}
+
+/* ══ HISTORY LIST ════════════════════════════════ */
+.hist-item{
+  display:flex;align-items:center;gap:8px;padding:6px 8px;
+  border:1px solid var(--border);border-radius:3px;
+  cursor:pointer;transition:all .12s;background:var(--panel);
+}
+.hist-item:hover{border-color:var(--accent2);background:var(--panel2)}
+.hist-favicon{width:14px;height:14px;object-fit:contain;flex-shrink:0}
+.hist-info{flex:1;min-width:0}
+.hist-title{font-size:11px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist-url{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist-time{font-size:10px;color:var(--dim);flex-shrink:0}
+.hist-del{
+  width:18px;height:18px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:10px;cursor:pointer;border-radius:2px;flex-shrink:0;
+}
+.hist-del:hover{background:var(--red);color:#fff}
+.hist-empty{color:var(--muted);font-size:11px;text-align:center;padding:20px}
+
+
+/* ── ANİME KIZ ── */
+#anime-girl{
+  position:fixed;bottom:0;right:18px;z-index:50;pointer-events:auto;
+  width:120px;height:auto;
+  animation:animeFloat 4s ease-in-out infinite;
+  transition:opacity .5s, filter .4s;
+  image-rendering:auto;
+  cursor:pointer;
+  transform-origin:bottom center;
+}
+#anime-girl.hidden{opacity:0;pointer-events:none}
+#anime-girl:hover{ animation:animeHover .4s ease-in-out infinite alternate }
+#anime-girl.excited{ animation:animeExcited .18s ease-in-out infinite !important }
+#anime-girl.clicked{ animation:animePop .35s ease-out forwards !important }
+@keyframes animeFloat{
+  0%,100%{transform:translateY(0px)}
+  50%{transform:translateY(-7px)}
+}
+@keyframes animeHover{
+  0%{transform:translateY(-4px) rotate(-3deg) scale(1.07)}
+  100%{transform:translateY(-9px) rotate(3deg) scale(1.1)}
+}
+@keyframes animeExcited{
+  0%  {transform:translateY(0) rotate(-4deg) scale(1.05)}
+  50% {transform:translateY(-5px) rotate(4deg) scale(1.08)}
+  100%{transform:translateY(0) rotate(-4deg) scale(1.05)}
+}
+@keyframes animePop{
+  0%  {transform:scale(1) translateY(0)}
+  30% {transform:scale(1.25) translateY(-18px) rotate(-8deg)}
+  60% {transform:scale(0.95) translateY(-4px) rotate(5deg)}
+  100%{transform:scale(1) translateY(0) rotate(0deg)}
+}
+.chibi-heart{
+  position:fixed;z-index:51;pointer-events:none;
+  font-size:22px;opacity:1;
+  animation:heartFly .9s ease-out forwards;
+}
+@keyframes heartFly{
+  0%  {opacity:1;transform:translateY(0) scale(.5)}
+  60% {opacity:1;transform:translateY(-60px) scale(1.2)}
+  100%{opacity:0;transform:translateY(-90px) scale(.8)}
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%;background:var(--bg);color:var(--accent);font-family:'Share Tech Mono',monospace;overflow:hidden;transition:background .4s,color .4s}
+
+/* scanlines & vignette kaldırıldı */
+@keyframes scanmove{0%{background-position:0 0}100%{background-position:0 100px}}
+@keyframes flicker{0%,100%{opacity:1}50%{opacity:.97}95%{opacity:.95}96%{opacity:1}}
+
+#shell{display:flex;flex-direction:column;position:fixed;inset:0}
+
+/* ══ TITLEBAR ══════════════════════════════════════════════ */
+#titlebar{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg);height:34px;
+  border-bottom:1px solid var(--border);
+  padding:0 10px;flex-shrink:0;
+  -webkit-app-region:drag;position:relative;overflow:hidden;
+}
+#titlebar::after{
+  content:'';position:absolute;bottom:0;left:-100%;width:60%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  animation:titlescan 4s linear infinite;
+}
+@keyframes titlescan{0%{left:-60%}100%{left:100%}}
+#titlebar *{-webkit-app-region:no-drag}
+
+.t-logo{
+  font-family:'Orbitron',monospace;font-size:13px;font-weight:900;
+  color:var(--accent);letter-spacing:5px;flex-shrink:0;
+  text-shadow:0 0 10px var(--accent),0 0 20px var(--accent2);
+  animation:logoglitch 8s ease-in-out infinite;
+}
+@keyframes logoglitch{
+  0%,95%,100%{transform:none}
+  96%{transform:translateX(2px);text-shadow:-2px 0 #ff0040,2px 0 #00ffff}
+  97%{transform:translateX(-2px)}
+  98%{transform:none}
+}
+.t-mid{flex:1;display:flex;align-items:center;justify-content:center;-webkit-app-region:drag}
+.t-status{font-size:10px;color:var(--muted);letter-spacing:2px}
+/* win controls — RIGHT side */
+.win-ctrls{display:flex;gap:3px;-webkit-app-region:no-drag;margin-left:auto}
+.wb{
+  width:26px;height:26px;border-radius:4px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-size:11px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.wb:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 8px var(--accent)}
+.wb.danger:hover{border-color:var(--red);color:var(--red);box-shadow:0 0 8px var(--red)}
+
+/* ══ TAB BAR ═══════════════════════════════════════════════ */
+#tabbar{
+  display:flex;align-items:flex-end;background:var(--bg);
+  padding:5px 0 0;gap:0;min-height:36px;
+  flex-shrink:0;border-bottom:1px solid var(--border);
+  position:relative;
+}
+/* scrollable tab list */
+#tab-scroll{
+  display:flex;align-items:flex-end;
+  flex:1;overflow-x:auto;scrollbar-width:none;
+  padding:0 8px;gap:2px;min-width:0;
+}
+#tab-scroll::-webkit-scrollbar{display:none}
+/* fixed new-tab buttons pinned to the right */
+.tab-btns{
+  display:flex;gap:2px;align-items:flex-end;
+  flex-shrink:0;padding:0 6px 0 4px;
+  border-left:1px solid var(--border);background:var(--bg);
+}
+.tab{
+  display:flex;align-items:center;gap:6px;height:28px;padding:0 9px;
+  background:var(--panel);border:1px solid var(--border);
+  border-bottom:none;border-radius:4px 4px 0 0;
+  cursor:pointer;min-width:90px;max-width:180px;
+  font-size:11px;color:var(--muted);
+  transition:all .15s;position:relative;flex-shrink:0;
+}
+.tab:hover{border-color:var(--accent2);color:var(--accent2)}
+.tab.active{
+  background:var(--bg2);color:var(--accent);
+  border-color:var(--accent2);
+  text-shadow:0 0 8px var(--accent);
+}
+.tab.active::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;
+  height:1px;background:var(--bg2);
+}
+.tab.loading::before{
+  content:'';position:absolute;bottom:0;left:0;height:2px;
+  background:var(--accent);
+  animation:tabload 1.5s ease-in-out infinite;border-radius:1px;
+}
+@keyframes tabload{0%{width:0;left:0}50%{width:60%;left:20%}100%{width:0;left:100%}}
+.tab.private-tab{border-color:#2a0055}
+.tab.private-tab.active{border-color:#6600aa;color:#aa44ff;text-shadow:0 0 8px #aa44ff}
+/* Eye icon inside private tabs */
+.tab-eye{
+  width:18px;height:11px;flex-shrink:0;
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.tab-eye::before{
+  content:'';position:absolute;inset:0;
+  border:1.5px solid #aa44ff;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+.tab-eye-inner{
+  width:5px;height:5px;border-radius:50%;
+  background:#aa44ff;display:block;
+  box-shadow:0 0 4px #aa00ff;
+}
+.tab.private-tab.active .tab-eye::before{border-color:#cc66ff}
+.tab.private-tab.active .tab-eye-inner{background:#cc66ff;box-shadow:0 0 6px #cc00ff}
+.tab-icon,.tab-title,.tab-x{flex-shrink:0}
+.tab-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tab-x{
+  width:13px;height:13px;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--muted);transition:all .12s;
+}
+.tab-x:hover{background:var(--red);color:#fff}
+.tab-btns{display:flex;gap:2px;align-items:flex-end}
+.nt-btn{
+  height:28px;width:28px;
+  display:flex;align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--border);
+  border-bottom:none;border-radius:4px 4px 0 0;
+  cursor:pointer;font-size:16px;color:var(--muted);
+  transition:all .15s;flex-shrink:0;
+}
+.nt-btn:hover{color:var(--accent);border-color:var(--accent);box-shadow:0 0 8px var(--accent3)}
+/* Eye icon for private tab button */
+.nt-btn.priv{border-color:#330044;color:#6600aa;font-size:13px;position:relative}
+.nt-btn.priv:hover{border-color:#aa00ff;color:#cc00ff;box-shadow:0 0 10px rgba(170,0,255,.4)}
+/* CSS eye shape inside private button */
+.eye-icon{
+  position:relative;width:18px;height:11px;
+  display:flex;align-items:center;justify-content:center;
+}
+.eye-icon::before{
+  content:'';position:absolute;inset:0;
+  border:1.5px solid currentColor;border-radius:50%;
+  clip-path:ellipse(50% 50% at 50% 50%);
+}
+.eye-icon::after{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:currentColor;flex-shrink:0;
+}
+
+/* ══ TOOLBAR ═══════════════════════════════════════════════ */
+#toolbar{
+  display:flex;align-items:center;gap:4px;
+  background:var(--panel);border-bottom:1px solid var(--border);
+  padding:0 8px;height:46px;flex-shrink:0;
+}
+.nb{
+  width:28px;height:28px;border-radius:4px;
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;
+}
+.nb:hover:not([disabled]){
+  color:var(--accent);border-color:var(--accent);
+  box-shadow:0 0 8px var(--accent3);
+}
+.nb[disabled]{opacity:.2;cursor:default}
+#addr-wrap{
+  flex:1;display:flex;align-items:center;gap:6px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:4px;padding:0 8px;height:30px;
+  transition:all .2s;min-width:0;position:relative;
+}
+#addr-wrap:focus-within{border-color:var(--accent2);box-shadow:0 0 10px rgba(0,0,0,.3)}
+.addr-pre{font-size:10px;color:var(--muted);flex-shrink:0}
+#sec-badge{
+  display:flex;align-items:center;gap:4px;font-size:10px;
+  padding:1px 6px;border-radius:3px;flex-shrink:0;
+  letter-spacing:.5px;transition:all .2s;cursor:default;
+}
+#sec-badge.safe{color:#00cc33;border:1px solid #00330033;background:#00110008}
+#sec-badge.warn{color:#ff8c00;border:1px solid #553300;background:#110800}
+#sec-badge.danger{color:var(--red);border:1px solid #550010;background:#0f000033;animation:dangerpulse .8s ease-in-out infinite}
+@keyframes dangerpulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 8px var(--red)}}
+#url-bar{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--accent);font-family:'Share Tech Mono',monospace;
+  font-size:12px;caret-color:var(--accent);min-width:0;
+}
+#url-bar::placeholder{color:var(--dim)}
+#go-btn{
+  background:transparent;border:1px solid var(--accent2);
+  border-radius:3px;color:var(--accent);
+  font-family:'Share Tech Mono',monospace;font-size:10px;
+  padding:2px 10px;cursor:pointer;flex-shrink:0;
+  transition:all .15s;white-space:nowrap;letter-spacing:1px;
+}
+#go-btn:hover{background:var(--accent);color:#000;box-shadow:0 0 10px var(--accent)}
+#btn-settings-tb{
+  display:flex;align-items:center;gap:5px;height:28px;padding:0 10px;
+  background:transparent;border:1px solid var(--border);border-radius:4px;
+  color:var(--muted);font-family:'Share Tech Mono',monospace;
+  font-size:10px;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;
+}
+#btn-settings-tb:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 12px rgba(0,0,0,.3)}
+
+/* ══ CONTENT AREA ════════════════════════════════════════ */
+#viewport{flex:1;position:relative;background:var(--bg);overflow:hidden;min-height:0;display:flex;flex-direction:column}
+.tab-page{position:absolute;inset:0;display:none;flex-direction:column;width:100%;height:100%}
+.tab-page.visible{display:flex}
+
+/* ══ HOME / NEW TAB — HACKER STYLE ══════════════════════ */
+.home-screen{
+  flex:1;width:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:18px;padding:20px 24px;
+  overflow:hidden;position:relative;
+  background:#000;
+  font-family:'Share Tech Mono',monospace;
+}
+.home-screen.private-home{background:#000810}
+/* home scanline & vignette kaldırıldı */
+.matrix-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;width:100%;height:100%}
+.petal-canvas{position:absolute;inset:0;pointer-events:none;z-index:0;width:100%;height:100%}
+
+/* MIAU logo — Orbitron + glitch */
+.home-logo{
+  font-family:'Orbitron',monospace;font-size:52px;font-weight:900;
+  color:var(--accent);letter-spacing:10px;
+  text-shadow:0 0 20px var(--accent),0 0 40px var(--accent2);
+  animation:homepulse 2.5s ease-in-out infinite,logoglitch 8s ease-in-out infinite;
+  position:relative;z-index:1;
+}
+@keyframes homepulse{
+  0%,100%{text-shadow:0 0 20px var(--accent),0 0 40px var(--accent2)}
+  50%{text-shadow:0 0 30px var(--accent),0 0 60px var(--accent2),0 0 100px var(--accent3)}
+}
+/* glitch pseudo-elements for logo */
+.home-logo::before,.home-logo::after{
+  content:attr(data-text);position:absolute;left:0;top:0;
+  width:100%;height:100%;pointer-events:none;
+}
+.home-logo::before{
+  color:#f0f;clip-path:polygon(0 25%,100% 25%,100% 45%,0 45%);
+  transform:translateX(-3px);animation:glitchBefore 8s ease-in-out infinite;
+}
+.home-logo::after{
+  color:#0ff;clip-path:polygon(0 55%,100% 55%,100% 75%,0 75%);
+  transform:translateX(3px);animation:glitchAfter 8s ease-in-out infinite;
+}
+@keyframes glitchBefore{0%,94%,100%{opacity:0}95%,97%{opacity:.8}96%,98%{opacity:0}}
+@keyframes glitchAfter{0%,96%,100%{opacity:0}97%,99%{opacity:.8}98%,100%{opacity:0}}
+
+.home-tagline{
+  font-size:10px;letter-spacing:5px;color:var(--muted);
+  position:relative;z-index:1;
+  animation:tagblink 4s ease-in-out infinite;
+}
+@keyframes tagblink{0%,100%{opacity:.6}50%{opacity:1;color:var(--accent2)}}
+
+.nt-prefix{
+  font-size:12px;color:var(--accent);z-index:1;
+  letter-spacing:1px;opacity:.7;
+  text-shadow:0 0 6px var(--accent);
+}
+
+/* ── SAAT ── */
+.home-clock{
+  font-family:'Orbitron',monospace;
+  font-size:15px;letter-spacing:6px;
+  color:var(--accent);opacity:.75;
+  position:relative;z-index:1;
+  text-shadow:0 0 10px var(--accent);
+  transition:opacity .3s;
+}
+.home-clock:hover{opacity:1}
+
+/* search bar */
+.home-search{
+  display:flex;align-items:stretch;
+  background:var(--panel);border:1px solid var(--accent2);
+  border-radius:6px;width:100%;max-width:560px;
+  overflow:hidden;position:relative;z-index:1;
+  transition:all .2s;height:44px;
+}
+.home-search:focus-within{
+  border-color:var(--accent);
+  box-shadow:0 0 20px var(--accent3),0 0 40px rgba(0,0,0,.3);
+}
+.hs-icon{
+  padding:0 12px;font-size:14px;color:var(--muted);
+  display:flex;align-items:center;
+  border-right:1px solid var(--border);flex-shrink:0;
+}
+#home-search-input{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--accent);font-family:'Share Tech Mono',monospace;
+  font-size:14px;padding:0 4px;caret-color:var(--accent);
+}
+#home-search-input::placeholder{color:var(--dim)}
+.hs-btn{
+  padding:0 20px;background:var(--accent3);
+  border:none;border-left:1px solid var(--border);
+  color:var(--accent);font-family:'Share Tech Mono',monospace;
+  font-size:11px;cursor:pointer;transition:all .15s;
+  letter-spacing:1px;display:flex;align-items:center;
+  white-space:nowrap;flex-shrink:0;
+}
+.hs-btn:hover{background:var(--accent);color:#000}
+
+.nt-info{
+  font-size:10px;color:var(--muted);z-index:1;
+  text-align:center;letter-spacing:2px;
+}
+.nt-cursor{
+  display:inline-block;width:8px;height:14px;
+  background:var(--accent);margin-left:3px;vertical-align:middle;
+  animation:cursorBlink .9s step-end infinite;
+  box-shadow:0 0 6px var(--accent);
+}
+@keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ══ PRIVATE EYE ═════════════════════════════════════════ */
+.eye-logo{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.eye-wrap{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center}
+.eye-ring{
+  position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid rgba(170,0,255,.4);
+  box-shadow:0 0 20px rgba(170,0,255,.3),0 0 40px rgba(170,0,255,.15);
+  animation:ringPulse 3s ease-in-out infinite;
+}
+@keyframes ringPulse{
+  0%,100%{box-shadow:0 0 20px rgba(170,0,255,.3),0 0 40px rgba(170,0,255,.15);opacity:.6}
+  50%{box-shadow:0 0 35px rgba(170,0,255,.6),0 0 70px rgba(170,0,255,.3);opacity:1}
+}
+.eye-shape{
+  width:110px;height:60px;
+  background:linear-gradient(180deg,#0d0020 0%,#1a0035 100%);
+  border-radius:50%;border:2px solid #aa00ff;
+  box-shadow:0 0 15px rgba(170,0,255,.5),inset 0 0 20px rgba(0,0,0,.5);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  animation:eyeBlink 5s ease-in-out infinite;
+}
+.eye-shape::before{
+  content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:52%;
+  background:linear-gradient(180deg,#050010 0%,transparent 100%);
+  border-radius:50% 50% 0 0;transform-origin:top center;
+  animation:eyelidMove 5s ease-in-out infinite;
+}
+@keyframes eyeBlink{0%,40%,60%,100%{transform:scaleY(1)}50%{transform:scaleY(0.07)}}
+@keyframes eyelidMove{0%,40%,60%,100%{transform:scaleY(1)}50%{transform:scaleY(14)}}
+.eye-iris{
+  width:38px;height:38px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#6600cc 0%,#3d0080 40%,#0d001a 100%);
+  border:2px solid #aa00ff;box-shadow:0 0 12px rgba(170,0,255,.6);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+  animation:eyeMove 7s ease-in-out infinite;
+}
+@keyframes eyeMove{
+  0%,100%{transform:translate(0,0)}
+  15%{transform:translate(8px,-3px)}
+  35%{transform:translate(-8px,2px)}
+  55%{transform:translate(5px,4px)}
+  75%{transform:translate(-4px,-4px)}
+}
+.eye-pupil{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#1a0033 0%,#000 100%);position:relative}
+.eye-pupil::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.9);top:3px;left:4px}
+.eye-scan{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(170,0,255,.8),transparent);
+  animation:eyeScan 2.5s linear infinite;z-index:3;
+}
+@keyframes eyeScan{0%{top:5px;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:calc(100% - 5px);opacity:0}}
+
+/* ══ PRIVATE CUTE HEART — tatlı temada göz yerine atan kalp ══ */
+.private-heart-logo{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.private-heart-wrap{
+  width:120px;height:120px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.private-heart-main{
+  font-size:68px;line-height:1;
+  filter:drop-shadow(0 0 12px var(--accent)) drop-shadow(0 0 24px var(--accent2));
+  animation:heartBeat 1s ease-in-out infinite;
+  transform-origin:center bottom;
+  display:inline-block;
+}
+.private-heart-orbit{
+  position:absolute;width:100%;height:100%;
+  animation:heartOrbitSpin 4s linear infinite;
+}
+.private-heart-mini{
+  position:absolute;font-size:14px;
+  filter:drop-shadow(0 0 4px var(--accent));
+  opacity:0.7;
+}
+.private-heart-mini:nth-child(1){top:2px;left:50%;transform:translateX(-50%)}
+.private-heart-mini:nth-child(2){bottom:2px;left:50%;transform:translateX(-50%)}
+.private-heart-mini:nth-child(3){left:2px;top:50%;transform:translateY(-50%)}
+.private-heart-mini:nth-child(4){right:2px;top:50%;transform:translateY(-50%)}
+@keyframes heartBeat{
+  0%,100%{transform:scale(1)}
+  14%{transform:scale(1.18)}
+  28%{transform:scale(1)}
+  42%{transform:scale(1.12)}
+  70%{transform:scale(1)}
+}
+@keyframes heartOrbitSpin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+.eye-lash-top,.eye-lash-bot{position:absolute;left:50%;transform:translateX(-50%);width:0;height:0}
+.eye-lash-top{top:-8px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:8px solid rgba(170,0,255,.5)}
+.eye-lash-bot{bottom:-8px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid rgba(170,0,255,.5)}
+.eye-label{
+  font-size:11px;font-weight:700;letter-spacing:4px;
+  color:#aa44ff;text-transform:uppercase;
+  font-family:'Orbitron',monospace;
+  text-shadow:0 0 12px #aa00ff;
+  animation:labelPulse 3s ease-in-out infinite;
+}
+@keyframes labelPulse{0%,100%{opacity:.6;letter-spacing:4px}50%{opacity:1;letter-spacing:5px;text-shadow:0 0 20px #aa00ff}}
+
+/* ══ WEBVIEW ════════════════════════════════════════════ */
+webview{flex:1;width:100%;height:100%;border:none;background:#fff;display:flex;min-height:0}
+
+/* ══ DOWNLOAD BAR ════════════════════════════════════════ */
+#dl-bar{
+  position:fixed;bottom:0;left:0;right:0;background:var(--panel);
+  border-top:1px solid var(--border);display:flex;flex-wrap:wrap;
+  gap:8px;padding:6px 12px;z-index:1000;max-height:120px;overflow-y:auto;
+}
+#dl-bar.hidden{display:none}
+.dl-item{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:4px;padding:4px 10px;font-size:11px;max-width:280px;
+}
+.dl-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;color:var(--accent2)}
+.dl-prog{font-size:10px;color:var(--accent);white-space:nowrap}
+
+/* ══ NOTIFICATIONS ═══════════════════════════════════════ */
+#notif-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.notif{
+  background:var(--panel);border:1px solid var(--accent2);
+  border-radius:6px;padding:8px 20px;font-size:12px;color:var(--accent);
+  opacity:0;transform:translateY(8px);
+  transition:all .3s;pointer-events:auto;white-space:nowrap;
+}
+.notif.show{opacity:1;transform:translateY(0)}
+
+/* ══ SETTINGS PANEL (side) ════════════════════════════════ */
+#settings-panel{
+  position:fixed;right:0;top:0;bottom:0;width:380px;
+  background:var(--bg2);border-left:1px solid var(--border);
+  z-index:300;display:none;flex-direction:column;
+  transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);
+}
+#settings-panel.show{display:flex;transform:translateX(0)}
+.sp-header{
+  display:flex;align-items:center;padding:12px 14px;
+  border-bottom:1px solid var(--border);position:relative;flex-shrink:0;
+}
+.sp-header::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.sp-title{
+  font-family:'Orbitron',monospace;font-size:11px;font-weight:700;
+  color:var(--accent);letter-spacing:3px;flex:1;
+}
+.sp-close{
+  background:transparent;border:none;color:var(--muted);
+  font-size:16px;cursor:pointer;transition:all .15s;
+}
+.sp-close:hover{color:var(--red);transform:rotate(90deg)}
+.sp-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--border);flex-shrink:0}
+.sp-tab{
+  flex-shrink:0;padding:7px 11px;font-size:10px;color:var(--muted);
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .15s;letter-spacing:1px;white-space:nowrap;
+}
+.sp-tab:hover{color:var(--accent2)}
+.sp-tab.active{color:var(--accent);border-color:var(--accent)}
+.sp-body{flex:1;overflow-y:auto;padding:12px}
+.sp-section{display:none}
+.sp-section.active{display:block;animation:fadeup .2s ease}
+@keyframes fadeup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sp-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin:10px 0 6px;padding:0 2px}
+
+/* theme grid */
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:4px}
+.theme-btn{
+  padding:12px 8px;border:2px solid var(--border);border-radius:8px;
+  cursor:pointer;text-align:center;transition:all .2s;
+  font-size:10px;letter-spacing:1px;line-height:1.5;
+  font-family:'Share Tech Mono',monospace;
+}
+.theme-btn:hover{transform:scale(1.04)}
+.theme-btn.active{transform:scale(1.04)}
+.theme-btn small{display:block;font-size:9px;opacity:.7;margin-top:2px;letter-spacing:2px}
+
+/* security toggles */
+.sec-row{
+  display:flex;align-items:center;gap:10px;padding:10px;
+  border:1px solid var(--border);border-radius:6px;
+  margin-bottom:6px;background:var(--panel);
+}
+.sec-row-label{flex:1;font-size:11px;color:var(--accent2)}
+.sec-row-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.tog{position:relative;width:36px;height:20px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0}
+.tog-track{
+  position:absolute;inset:0;background:var(--dim);
+  border-radius:10px;cursor:pointer;transition:.3s;
+}
+.tog-track::before{
+  content:'';position:absolute;width:14px;height:14px;
+  left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;
+}
+.tog input:checked + .tog-track{background:var(--accent2)}
+.tog input:checked + .tog-track::before{transform:translateX(16px)}
+
+/* search engine select */
+.sp-select{
+  width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:3px;color:var(--accent);
+  font-family:'Share Tech Mono',monospace;font-size:11px;
+  padding:6px 8px;outline:none;margin-top:4px;
+}
+.sp-select:focus{border-color:var(--accent2)}
+
+/* self destruct button */
+.sd-btn{
+  width:100%;padding:9px;background:transparent;
+  border:2px solid var(--red);border-radius:4px;
+  color:var(--red);font-family:'Share Tech Mono',monospace;
+  font-size:11px;cursor:pointer;letter-spacing:2px;transition:all .15s;
+  margin-top:8px;
+}
+.sd-btn:hover{background:var(--red);color:#000}
+
+/* stats */
+.stat-line{font-size:11px;color:var(--muted);padding:6px 2px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.stat-line span{color:var(--accent);font-weight:bold;letter-spacing:1px}
+.stat-line .stat-bar-wrap{flex:1;margin:0 10px;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden}
+.stat-line .stat-bar{height:100%;border-radius:2px;background:var(--accent);transition:width .6s ease;box-shadow:0 0 6px var(--accent)}
+.stat-line .stat-bar.warn{background:#ffaa00;box-shadow:0 0 6px #ffaa00}
+.stat-line .stat-bar.danger{background:var(--red);box-shadow:0 0 6px var(--red)}
+.stat-section-title{font-size:9px;color:var(--dim);letter-spacing:3px;margin:10px 0 4px;text-transform:uppercase}
+#ram-live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:5px;vertical-align:middle;animation:ramPulse 1.5s ease-in-out infinite}
+@keyframes ramPulse{0%,100%{opacity:1;box-shadow:0 0 4px var(--accent)}50%{opacity:.4;box-shadow:none}}
+
+/* ── YER İMLERİ ── */
+.bm-item{
+  display:flex;align-items:center;gap:8px;padding:7px 4px;
+  border-bottom:1px solid var(--border);cursor:pointer;
+  transition:background .15s;border-radius:4px;
+}
+.bm-item:hover{background:var(--bg2)}
+.bm-favicon{width:14px;height:14px;border-radius:2px;flex-shrink:0;object-fit:contain}
+.bm-favicon-default{width:14px;height:14px;border-radius:2px;flex-shrink:0;
+  background:var(--accent3);display:flex;align-items:center;justify-content:center;
+  font-size:8px;color:var(--accent)}
+.bm-info{flex:1;min-width:0}
+.bm-title{font-size:11px;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-url{font-size:9px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.bm-del{font-size:13px;color:var(--dim);padding:2px 6px;border-radius:3px;flex-shrink:0;
+  opacity:0;transition:opacity .15s;cursor:pointer}
+.bm-item:hover .bm-del{opacity:1}
+.bm-del:hover{color:var(--red)}
+.bm-empty{font-size:11px;color:var(--dim);text-align:center;padding:20px 0}
+#btn-bookmark.bookmarked{color:#ffcc00;border-color:#ffcc00}
+#btn-dark-reader.active{color:var(--accent);border-color:var(--accent)}
+
+/* lang buttons */
+.lang-row{display:flex;gap:8px;margin-top:6px}
+.lang-btn{
+  flex:1;padding:8px;background:transparent;
+  border:1px solid var(--border);border-radius:4px;
+  color:var(--muted);font-family:'Share Tech Mono',monospace;
+  font-size:11px;cursor:pointer;transition:all .15s;text-align:center;letter-spacing:1px;
+}
+.lang-btn:hover,.lang-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent3)}
+
+/* ══ PHISHING BAR ════════════════════════════════════════ */
+.phish-bar{
+  display:flex;align-items:center;gap:10px;
+  background:#1a0000;border-bottom:2px solid var(--red);
+  padding:7px 14px;flex-shrink:0;font-size:11px;
+}
+.phish-bar.hidden{display:none}
+.phish-bar .ph-text{flex:1;color:#ff6060}
+.phish-bar button{
+  background:transparent;border:1px solid var(--red);
+  border-radius:3px;color:var(--red);font-size:10px;
+  padding:3px 8px;cursor:pointer;transition:all .15s;
+}
+.phish-bar button:hover{background:var(--red);color:#000}
+
+/* ══ PDF VIEWER ═════════════════════════════════════════ */
+.pdf-viewer-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#525659}
+.pdf-tb{
+  display:flex;align-items:center;gap:8px;padding:6px 12px;
+  background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.pdf-tb button{
+  background:transparent;border:1px solid var(--border);
+  border-radius:3px;color:var(--muted);font-size:11px;
+  padding:3px 10px;cursor:pointer;transition:all .15s;
+  font-family:'Share Tech Mono',monospace;
+}
+.pdf-tb button:hover{border-color:var(--accent);color:var(--accent)}
+.pdf-tb span{font-size:11px;color:var(--muted)}
+
+/* ══ SELF-DESTRUCT MODAL ════════════════════════════════ */
+#sd-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.88);
+  z-index:800;display:flex;align-items:center;justify-content:center;
+  animation:fadeup .2s ease;
+}
+#sd-overlay.hidden{display:none}
+.sd-modal{
+  background:var(--bg2);border:2px solid var(--red);
+  border-radius:12px;padding:28px 32px;
+  max-width:380px;width:90%;text-align:center;
+}
+.sd-title{
+  font-family:'Orbitron',monospace;font-size:13px;font-weight:900;
+  color:var(--red);letter-spacing:4px;margin-bottom:16px;
+  text-shadow:0 0 12px var(--red);
+}
+.sd-opt{display:flex;align-items:center;gap:10px;padding:8px;border-radius:4px;cursor:pointer;margin-bottom:4px;transition:background .15s}
+.sd-opt:hover{background:var(--panel)}
+.sd-opt input{accent-color:var(--red);width:14px;height:14px}
+.sd-opt label{font-size:11px;color:var(--muted);cursor:pointer}
+.sd-timer{margin:12px 0;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.sd-timer input{width:60px;background:var(--bg);border:1px solid var(--border);border-radius:3px;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:11px;padding:3px 6px;text-align:center}
+.sd-btns{display:flex;gap:8px;margin-top:16px}
+.sd-go{flex:1;padding:9px;background:transparent;border:2px solid var(--red);border-radius:4px;color:var(--red);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:2px;transition:all .15s}
+.sd-go:hover{background:var(--red);color:#000}
+.sd-cancel{flex:1;padding:9px;background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s}
+.sd-cancel:hover{border-color:var(--muted);color:var(--accent)}
+
+/* ══ MISC ════════════════════════════════════════════════ */
+#credit{position:fixed;bottom:6px;right:10px;font-size:10px;color:var(--muted);opacity:.35;pointer-events:none;z-index:500;letter-spacing:.3px;font-style:italic}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}::-webkit-scrollbar-thumb:hover{background:var(--accent2)}
+</style>
+</head>
+<body data-theme="green">
+<div id="shell">
+
+  <!-- TITLEBAR -->
+  <div id="titlebar" ondblclick="handleTitlebarDblClick(event)">
+    <div class="t-logo">◈ MIAU</div>
+    <div class="t-mid"><div class="t-status" id="tstatus">SECURE ■</div></div>
+    <!-- win controls on the RIGHT -->
+    <div class="win-ctrls">
+      <div class="wb" id="wb-min" title="Minimize">_</div>
+      <div class="wb" id="wb-max" title="Maximize">□</div>
+      <div class="wb" id="wb-fs"  title="Fullscreen">⛶</div>
+      <div class="wb danger" id="wb-cls" title="Close">✕</div>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div id="tabbar">
+    <div id="tab-scroll"><!-- tabs injected here --></div>
+    <div class="tab-btns">
+      <div class="nt-btn" id="btn-new-tab" title="New Tab">+</div>
+      <div class="nt-btn priv" id="btn-new-priv" title="New Private Tab">
+        <span class="eye-icon"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div id="toolbar">
+    <div class="nb" id="btn-back"   title="Geri (Alt+←)">←</div>
+    <div class="nb" id="btn-fwd"    title="İleri (Alt+→)">→</div>
+    <div class="nb" id="btn-reload" title="Yenile (Ctrl+R)">↺</div>
+    <div class="nb" id="btn-home"   title="Ana Sayfa">⌂</div>
+    <div id="addr-wrap">
+      <span class="addr-pre">//</span>
+      <div id="sec-badge" class="safe">🔒</div>
+      <input id="url-bar" type="text" placeholder="" autocomplete="off" spellcheck="false">
+      <div id="go-btn">[GO]</div>
+    </div>
+    <!-- ZOOM CONTROLS -->
+    <div class="nb" id="btn-zoom-out" title="Uzaklaştır (Ctrl+-)">−</div>
+    <div id="zoom-display" title="Zoom Sıfırla (Ctrl+0)">100%</div>
+    <div class="nb" id="btn-zoom-in"  title="Yaklaştır (Ctrl+=)">＋</div>
+    <div class="nb" id="btn-ss"     title="Ekran Görüntüsü">📷</div>
+    <div class="nb" id="btn-bookmark" title="Yer İmi Ekle/Kaldır">☆</div>
+    <div class="nb" id="btn-dark-reader" title="Dark Reader">🌙</div>
+    <div id="btn-settings-tb">⚙ MENU</div>
+  </div>
+  <!-- PROGRESS BAR -->
+  <div id="load-progress"><div id="load-progress-bar"></div></div>
+
+  <!-- FIND IN PAGE BAR -->
+  <div id="find-bar" class="hidden">
+    <span style="color:var(--muted);font-size:11px">FIND:</span>
+    <input id="find-input" type="text" placeholder="Ara..." autocomplete="off" spellcheck="false">
+    <span id="find-count" style="font-size:10px;color:var(--muted);min-width:50px;text-align:center"></span>
+    <button class="find-btn" id="find-prev">▲</button>
+    <button class="find-btn" id="find-next">▼</button>
+    <button class="find-btn" id="find-close">✕</button>
+  </div>
+
+  <!-- VIEWPORT -->
+  <div id="viewport"></div>
+
+</div><!-- #shell -->
+
+<!-- DOWNLOAD BAR -->
+<div id="dl-bar" class="hidden"></div>
+
+<!-- TAB TOOLTIP -->
+<div id="tab-tooltip" class="hidden"></div>
+
+<!-- HELP OVERLAY (Ctrl+?) -->
+<div id="help-overlay" class="hidden">
+  <div id="help-box">
+    <h2>⌨ KLAVYE KISAYOLLARI</h2>
+    <div class="help-section">
+      <div class="help-section-title">// SEKMELER</div>
+      <div class="help-row"><span class="help-desc">Yeni sekme</span><span class="help-key">Ctrl + T</span></div>
+      <div class="help-row"><span class="help-desc">Sekmeyi kapat</span><span class="help-key">Ctrl + W</span></div>
+      <div class="help-row"><span class="help-desc">Son sekmeyi geri aç</span><span class="help-key">Ctrl + Shift + T</span></div>
+      <div class="help-row"><span class="help-desc">Gizli sekme</span><span class="help-key">Ctrl + Shift + P</span></div>
+      <div class="help-row"><span class="help-desc">Sekmeyi sustur</span><span class="help-key">Ctrl + M</span></div>
+      <div class="help-row"><span class="help-desc">Sekme seç (1-9)</span><span class="help-key">Ctrl + 1…9</span></div>
+    </div>
+    <div class="help-section">
+      <div class="help-section-title">// GEZİNME</div>
+      <div class="help-row"><span class="help-desc">Adres çubuğu</span><span class="help-key">Ctrl + L</span></div>
+      <div class="help-row"><span class="help-desc">Yenile</span><span class="help-key">Ctrl + R</span></div>
+      <div class="help-row"><span class="help-desc">Geri</span><span class="help-key">Alt + ←</span></div>
+      <div class="help-row"><span class="help-desc">İleri</span><span class="help-key">Alt + →</span></div>
+      <div class="help-row"><span class="help-desc">Tam ekran</span><span class="help-key">F11</span></div>
+    </div>
+    <div class="help-section">
+      <div class="help-section-title">// ARAÇLAR</div>
+      <div class="help-row"><span class="help-desc">Sayfada ara</span><span class="help-key">Ctrl + F</span></div>
+      <div class="help-row"><span class="help-desc">Geçmiş</span><span class="help-key">Ctrl + H</span></div>
+      <div class="help-row"><span class="help-desc">Yaklaştır</span><span class="help-key">Ctrl + =</span></div>
+      <div class="help-row"><span class="help-desc">Uzaklaştır</span><span class="help-key">Ctrl + −</span></div>
+      <div class="help-row"><span class="help-desc">Zoom sıfırla</span><span class="help-key">Ctrl + 0</span></div>
+      <div class="help-row"><span class="help-desc">Bu ekran</span><span class="help-key">Ctrl + ?</span></div>
+    </div>
+    <button id="help-close">[ KAPAT ]</button>
+  </div>
+</div>
+
+<!-- CUSTOM CONTEXT MENU -->
+<div id="ctx-menu" class="hidden">
+  <div class="ctx-item" id="ctx-back">← Geri</div>
+  <div class="ctx-item" id="ctx-fwd">→ İleri</div>
+  <div class="ctx-item" id="ctx-reload">↺ Yenile</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item ctx-hide-no-link" id="ctx-open-link" style="display:none">🔗 Linki Yeni Sekmede Aç</div>
+  <div class="ctx-item ctx-hide-no-img"  id="ctx-save-img" style="display:none">💾 Resmi İndir</div>
+  <div class="ctx-item ctx-hide-no-img"  id="ctx-open-img" style="display:none">🖼 Resmi Yeni Sekmede Aç</div>
+  <div class="ctx-sep ctx-sep-media" style="display:none"></div>
+  <div class="ctx-item ctx-hide-no-sel"  id="ctx-copy-sel" style="display:none">📋 Seçili Metni Kopyala</div>
+  <div class="ctx-item" id="ctx-copy-url">📋 URL Kopyala</div>
+  <div class="ctx-item" id="ctx-new-tab">＋ Yeni Sekme</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" id="ctx-find">🔍 Sayfada Ara (Ctrl+F)</div>
+  <div class="ctx-item" id="ctx-screenshot">📷 Ekran Görüntüsü</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" id="ctx-bookmark">☆ Yer İmine Ekle</div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div id="notif-bar"></div>
+
+<!-- CREDIT -->
+<div id="credit">Developed by leopanoriginal</div>
+
+<!-- CHİBİ KIZ -->
+<img id="anime-girl" class="hidden" src="data:image/png;base64,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" alt="chibi" draggable="false">
+
+<!-- SETTINGS SIDE PANEL -->
+<div id="settings-panel">
+  <div class="sp-header">
+    <div class="sp-title" id="sp-title-txt">⚙ SETTINGS</div>
+    <button class="sp-close" id="sp-close">✕</button>
+  </div>
+  <div class="sp-tabs">
+    <div class="sp-tab active" data-sp="theme"  id="spt-theme">THEME</div>
+    <div class="sp-tab"        data-sp="sec"    id="spt-sec">SECURITY</div>
+    <div class="sp-tab"        data-sp="bm"     id="spt-bm">🔖 YER İMLERİ</div>
+    <div class="sp-tab"        data-sp="history" id="spt-history">📋 GEÇMİŞ</div>
+    <div class="sp-tab"        data-sp="search" id="spt-search">SEARCH</div>
+    <div class="sp-tab"        data-sp="destruct" id="spt-destruct">DESTRUCT</div>
+    <div class="sp-tab"        data-sp="stats"  id="spt-stats">STATS</div>
+    <div class="sp-tab"        data-sp="lang"   id="spt-lang">LANG</div>
+  </div>
+  <div class="sp-body">
+
+    <!-- THEME -->
+    <div class="sp-section active" id="sp-theme">
+      <div class="sp-label">// DARK</div>
+      <div class="theme-grid">
+        <div class="theme-btn t-green"        data-theme-set="green">GREEN<small>DEFAULT</small></div>
+        <div class="theme-btn t-specter"      data-theme-set="specter">SPECTER<small>NEON GREEN</small></div>
+        <div class="theme-btn t-matrix-black" data-theme-set="matrix-black">MATRIX<small>BLACK</small></div>
+        <div class="theme-btn t-blue"         data-theme-set="blue">BLUE<small>CYBER</small></div>
+        <div class="theme-btn t-vanta"        data-theme-set="vanta">VANTA<small>DEEP BLUE</small></div>
+        <div class="theme-btn t-cyan"         data-theme-set="cyan">CYAN<small>TEAL</small></div>
+        <div class="theme-btn t-purple"       data-theme-set="purple">PURPLE<small>DARK</small></div>
+        <div class="theme-btn t-violet"       data-theme-set="violet">VIOLET<small>DEEP</small></div>
+        <div class="theme-btn t-neon"         data-theme-set="neon">NEON<small>MAGENTA</small></div>
+        <div class="theme-btn t-pink"         data-theme-set="pink">PINK<small>DARK</small></div>
+        <div class="theme-btn t-red"          data-theme-set="red">RED<small>DARK</small></div>
+        <div class="theme-btn t-blood"        data-theme-set="blood">BLOOD<small>DARK RED</small></div>
+        <div class="theme-btn t-orange"       data-theme-set="orange">ORANGE<small>DARK</small></div>
+        <div class="theme-btn t-ember"        data-theme-set="ember">EMBER<small>FIRE</small></div>
+        <div class="theme-btn t-gold"         data-theme-set="gold">GOLD<small>DARK</small></div>
+        <div class="theme-btn t-black-gold"   data-theme-set="black-gold">GOLD+<small>BLACK</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// HACKER</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="kali"   style="background:#1a0030;color:#a855f7;border-color:#5500aa">KALI<small>LINUX</small></div>
+        <div class="theme-btn" data-theme-set="parrot" style="background:#001a0d;color:#00ff88;border-color:#00aa55">PARROT<small>OS</small></div>
+        <div class="theme-btn" data-theme-set="tails"  style="background:#0a0a1a;color:#8888ff;border-color:#3333aa">TAILS<small>OS</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// UZAY</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="nebula"    style="background:#0d001a;color:#cc44ff;border-color:#660099">NEBULA<small>COSMIC</small></div>
+        <div class="theme-btn" data-theme-set="deepspace" style="background:#000308;color:#4488ff;border-color:#001155">DEEP SPACE<small>COLD</small></div>
+        <div class="theme-btn" data-theme-set="mars"      style="background:#1a0800;color:#ff6622;border-color:#884400">MARS<small>RED PLANET</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// NEON GRADIENT</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="synthwave" style="background:#0d0020;color:#ff44cc;border-color:#770055">SYNTHWAVE<small>80s RETRO</small></div>
+        <div class="theme-btn" data-theme-set="aurora"    style="background:#000f08;color:#44ffcc;border-color:#006644">AURORA<small>BOREALIS</small></div>
+        <div class="theme-btn" data-theme-set="hologram"  style="background:#000818;color:#00ccff;border-color:#004488">HOLOGRAM<small>CYBER</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// ŞEHİR</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="tokyo-dark"     style="background:#0a0015;color:#ff0066;border-color:#cc0055">TOKYO<small>DARK</small></div>
+        <div class="theme-btn" data-theme-set="tokyo-light"    style="background:#fff0f5;color:#ff0066;border-color:#ffb3cc">TOKYO<small>LIGHT</small></div>
+        <div class="theme-btn" data-theme-set="telaviv-night"  style="background:#000c1a;color:#00aaff;border-color:#004488">TEL AVIV<small>GECE</small></div>
+        <div class="theme-btn" data-theme-set="telaviv-sunset" style="background:#1a0800;color:#ff8833;border-color:#cc5500">TEL AVIV<small>GÜNBATIMI</small></div>
+        <div class="theme-btn" data-theme-set="jerusalem-night" style="background:#080510;color:#c8941a;border-color:#4a3200">✡ KUDÜS<small>GECE</small></div>
+        <div class="theme-btn" data-theme-set="jerusalem-gold"  style="background:#fdf6e3;color:#8b5e00;border-color:#c8941a">✡ KUDÜS<small>GÜNDÜZ</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// LIGHT</div>
+      <div class="theme-grid">
+        <div class="theme-btn t-light"          data-theme-set="light">LIGHT<small>BLUE</small></div>
+        <div class="theme-btn t-light-pink"     data-theme-set="light-pink">LIGHT<small>PINK</small></div>
+        <div class="theme-btn t-light-mint"     data-theme-set="light-mint">MINT<small>LIGHT</small></div>
+        <div class="theme-btn t-light-lavender" data-theme-set="light-lavender">LAVENDER<small>LIGHT</small></div>
+        <div class="theme-btn t-light-gold"     data-theme-set="light-gold">GOLD<small>LIGHT</small></div>
+        <div class="theme-btn t-snow"           data-theme-set="snow">SNOW<small>LIGHT</small></div>
+        <div class="theme-btn t-cream"          data-theme-set="cream">CREAM<small>WARM</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// 🌸 TATLI — LIGHT</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="sakura-light"      style="background:#fff5f8;color:#ff6699;border-color:#ffb3cc">🌸 SAKURA<small>LIGHT</small></div>
+        <div class="theme-btn" data-theme-set="dreamy-light"      style="background:#f5f0ff;color:#9966ff;border-color:#ccaaff">✨ DREAMY<small>LIGHT</small></div>
+        <div class="theme-btn" data-theme-set="cottagecore-light" style="background:#f5f0e8;color:#8b5e3c;border-color:#c8a87a">🍃 COTTAGE<small>LIGHT</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// 🍬 PASTEL — BEYAZ</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="sky"      style="background:#f0f8ff;color:#3399ff;border-color:#99ccff">☁ SKY<small>PASTEL</small></div>
+        <div class="theme-btn" data-theme-set="lavender" style="background:#f8f5ff;color:#9955ee;border-color:#cc99ff">💜 LAVENDER<small>PASTEL</small></div>
+        <div class="theme-btn" data-theme-set="peach"    style="background:#fff8f3;color:#ff7733;border-color:#ffbb88">🍑 PEACH<small>PASTEL</small></div>
+        <div class="theme-btn" data-theme-set="mint"     style="background:#f3fff8;color:#22aa66;border-color:#88ddaa">🌿 MINT<small>PASTEL</small></div>
+      </div>
+
+      <div class="sp-label" style="margin-top:10px">// 🌸 TATLI — DARK</div>
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-set="sakura-dark"      style="background:#0f0008;color:#ff6699;border-color:#880044">🌸 SAKURA<small>DARK</small></div>
+        <div class="theme-btn" data-theme-set="dreamy-dark"      style="background:#0c0018;color:#cc88ff;border-color:#550099">✨ DREAMY<small>DARK</small></div>
+        <div class="theme-btn" data-theme-set="cottagecore-dark" style="background:#0a0800;color:#d4a96a;border-color:#6b4a1a">🍃 COTTAGE<small>DARK</small></div>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="sp-section" id="sp-sec">
+      <div class="sp-label" id="sl-security">// SECURITY</div>
+      <div class="sec-row"><div class="sec-row-label"><div id="sl-https">HTTPS Only</div><div class="sec-row-sub" id="sl-https-sub">Redirect all HTTP → HTTPS</div></div><label class="tog"><input type="checkbox" id="tog-https" checked><div class="tog-track"></div></label></div>
+      <div class="sec-row"><div class="sec-row-label"><div id="sl-track">Tracking Protection</div><div class="sec-row-sub" id="sl-track-sub">Block tracking scripts</div></div><label class="tog"><input type="checkbox" id="tog-track" checked><div class="tog-track"></div></label></div>
+      <div class="sec-row"><div class="sec-row-label"><div id="sl-ad">Ad Blocking</div><div class="sec-row-sub" id="sl-ad-sub">Block advertisement domains</div></div><label class="tog"><input type="checkbox" id="tog-ad" checked><div class="tog-track"></div></label></div>
+      <div class="sp-label" style="margin-top:12px">// GÖRÜNÜM</div>
+      <div class="sec-row"><div class="sec-row-label"><div>🌙 Dark Reader</div><div class="sec-row-sub">Her siteye koyu tema uygula</div></div><label class="tog"><input type="checkbox" id="tog-dark-reader"><div class="tog-track"></div></label></div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="sp-section" id="sp-search">
+      <div class="sp-label" id="sl-searchlbl">// SEARCH ENGINE</div>
+      <select class="sp-select" id="engine-select"></select>
+    </div>
+
+    <!-- SELF DESTRUCT -->
+    <div class="sp-section" id="sp-destruct">
+      <div class="sp-label" id="sl-sdlbl">// SELF-DESTRUCT</div>
+      <div class="sd-modal" style="border:1px solid var(--red);border-radius:8px;padding:16px;margin-top:8px">
+        <div class="sd-opt"><input type="checkbox" id="sd-history" checked><label for="sd-history" id="sl-sd-hist">Clear history</label></div>
+        <div class="sd-opt"><input type="checkbox" id="sd-cookies" checked><label for="sd-cookies" id="sl-sd-cook">Clear cookies</label></div>
+        <div class="sd-opt"><input type="checkbox" id="sd-cache" checked><label for="sd-cache" id="sl-sd-cache">Clear cache</label></div>
+        <div class="sd-timer"><span id="sl-sd-delay">Delay:</span><input type="number" id="sd-delay" value="0" min="0" max="60"><span id="sl-sd-min">min</span></div>
+        <button class="sd-btn" id="btn-sd-run" style="margin-top:12px">💥 RUN</button>
+      </div>
+    </div>
+
+    <!-- YER İMLERİ -->
+    <div class="sp-section" id="sp-bm">
+      <div class="sp-label">// YER İMLERİ</div>
+      <div id="bm-list" style="max-height:320px;overflow-y:auto"></div>
+    </div>
+
+    <!-- STATS -->
+    <div class="sp-section" id="sp-stats">
+      <div class="sp-label" id="sl-statslbl">// STATISTICS</div>
+      <div class="stat-section-title"><span id="ram-live-dot"></span>BELLEK — CANLI</div>
+      <div id="stats-display"></div>
+      <div class="stat-section-title" style="margin-top:14px">OTURUM</div>
+      <div id="stats-session"></div>
+    </div>
+
+    <!-- GEÇMİŞ -->
+    <div class="sp-section" id="sp-history">
+      <div class="sp-label">// GEÇMİŞ</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <input id="history-search-input" type="text" placeholder="Geçmişte ara..." autocomplete="off"
+          style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--accent);
+          font-family:'Share Tech Mono',monospace;font-size:11px;padding:4px 8px;border-radius:3px;outline:none">
+        <button id="btn-clear-history"
+          style="background:transparent;border:1px solid var(--red);color:var(--red);
+          font-family:'Share Tech Mono',monospace;font-size:10px;padding:4px 8px;
+          border-radius:3px;cursor:pointer;white-space:nowrap">🗑 Temizle</button>
+      </div>
+      <div id="history-list" style="max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:3px"></div>
+    </div>
+
+    <!-- LANG -->
+    <div class="sp-section" id="sp-lang">
+      <div class="sp-label">// LANGUAGE / שפה</div>
+      <div class="lang-row">
+        <button class="lang-btn active" data-lang="en">🇬🇧 English</button>
+        <button class="lang-btn" data-lang="he">🇮🇱 עברית</button>
+      </div>
+    </div>
+
+  </div>
+</div><!-- #settings-panel -->
+
+<!-- SELF DESTRUCT OVERLAY (done notification) -->
+<div id="sd-overlay" class="hidden"></div>
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+'use strict'
+const api = window.electronAPI
+if (window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
+
+// Erken tanımlanması gereken global state
+const closedTabs = []       // Ctrl+Shift+T için son kapatılan sekmeler
+const darkReaderKeys = new Map()  // tabId → insertCSS key
+
+// ═══════════════════════════════════════════════
+// LANGUAGE
+// ═══════════════════════════════════════════════
+const LANGS = {
+  en: {
+    settings:'⚙ SETTINGS', themeTab:'THEME', secTab:'SECURITY', searchTab:'SEARCH',
+    destructTab:'DESTRUCT', statsTab:'STATS', langTab:'LANG',
+    security:'// SECURITY', httpsOnly:'HTTPS Only', httpsOnlySub:'Redirect all HTTP → HTTPS',
+    trackProt:'Tracking Protection', trackProtSub:'Block tracking scripts',
+    adBlock:'Ad Blocking', adBlockSub:'Block advertisement domains',
+    searchLbl:'// SEARCH ENGINE', sdLbl:'// SELF-DESTRUCT',
+    sdHist:'Clear history', sdCook:'Clear cookies', sdCache:'Clear cache',
+    sdDelay:'Delay:', sdMin:'min', sdRun:'💥 RUN',
+    statsLbl:'// STATISTICS', adsBlocked:'Ads blocked', ram:'RAM',
+    newTab:'+ TAB', privTab:'🕵 PRIVATE',
+    back:'Back', forward:'Forward', reload:'Reload', home:'Home', go:'GO',
+    screenshot:'Screenshot', menuBtn:'⚙ MENU',
+    secureLabel:'SECURE ■', privateLabel:'// PRIVATE MODE //',
+    ntPlaceholder:'search or enter address...',
+    privNtPlaceholder:'enter command or url...',
+    ntInfo:'[ AD-BLOCK: ON ]  [ TRACKER-BLOCK: ON ]  [ HTTPS: ON ]',
+    privNtInfo:'[ ENCRYPTED — NO LOGS — NO COOKIES — NO CACHE ]',
+    ntPrefix:'miau@secure:~$', privNtPrefix:'root@miau:~# _',
+  },
+  he: {
+    settings:'⚙ הגדרות', themeTab:'ערכת נושא', secTab:'אבטחה', searchTab:'חיפוש',
+    destructTab:'מחיקה', statsTab:'סטטיסטיקה', langTab:'שפה',
+    security:'// אבטחה', httpsOnly:'HTTPS בלבד', httpsOnlySub:'הפנה HTTP → HTTPS',
+    trackProt:'הגנת מעקב', trackProtSub:'חסום סקריפטי מעקב',
+    adBlock:'חסימת מודעות', adBlockSub:'חסום דומיינים של פרסומות',
+    searchLbl:'// מנוע חיפוש', sdLbl:'// מחיקה עצמית',
+    sdHist:'מחק היסטוריה', sdCook:'מחק עוגיות', sdCache:'מחק מטמון',
+    sdDelay:'עיכוב:', sdMin:'דק׳', sdRun:'💥 הפעל',
+    statsLbl:'// סטטיסטיקה', adsBlocked:'מודעות חסומות', ram:'זיכרון RAM',
+    newTab:'+ לשונית', privTab:'🕵 פרטי',
+    back:'חזרה', forward:'קדימה', reload:'רענן', home:'בית', go:'לך',
+    screenshot:'צילום מסך', menuBtn:'⚙ תפריט',
+    secureLabel:'מאובטח ■', privateLabel:'// מצב פרטי //',
+    ntPlaceholder:'חיפוש או כתובת...',
+    privNtPlaceholder:'הכנס פקודה או כתובת...',
+    ntInfo:'[ חסימת מודעות: פעיל ]  [ הגנת מעקב: פעיל ]  [ HTTPS: פעיל ]',
+    privNtInfo:'[ מוצפן — ללא יומנים — ללא עוגיות — ללא מטמון ]',
+    ntPrefix:'miau@מאובטח:~$', privNtPrefix:'root@miau:~# _',
+  }
+}
+let currentLang = localStorage.getItem('miau_lang') || 'en'
+function t(k){ return LANGS[currentLang]?.[k] || LANGS.en[k] || k }
+
+function applyLang(lang) {
+  currentLang = lang
+  localStorage.setItem('miau_lang', lang)
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr'
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang))
+  document.getElementById('sp-title-txt').textContent = t('settings')
+  document.getElementById('spt-theme').textContent   = t('themeTab')
+  document.getElementById('spt-sec').textContent     = t('secTab')
+  document.getElementById('spt-search').textContent  = t('searchTab')
+  document.getElementById('spt-destruct').textContent= t('destructTab')
+  document.getElementById('spt-stats').textContent   = t('statsTab')
+  document.getElementById('spt-lang').textContent    = t('langTab')
+  document.getElementById('sl-security').textContent = t('security')
+  document.getElementById('sl-https').textContent    = t('httpsOnly')
+  document.getElementById('sl-https-sub').textContent= t('httpsOnlySub')
+  document.getElementById('sl-track').textContent    = t('trackProt')
+  document.getElementById('sl-track-sub').textContent= t('trackProtSub')
+  document.getElementById('sl-ad').textContent       = t('adBlock')
+  document.getElementById('sl-ad-sub').textContent   = t('adBlockSub')
+  document.getElementById('sl-searchlbl').textContent= t('searchLbl')
+  document.getElementById('sl-sdlbl').textContent    = t('sdLbl')
+  document.getElementById('sl-sd-hist').textContent  = t('sdHist')
+  document.getElementById('sl-sd-cook').textContent  = t('sdCook')
+  document.getElementById('sl-sd-cache').textContent = t('sdCache')
+  document.getElementById('sl-sd-delay').textContent = t('sdDelay')
+  document.getElementById('sl-sd-min').textContent   = t('sdMin')
+  document.getElementById('btn-sd-run').textContent  = t('sdRun')
+  document.getElementById('sl-statslbl').textContent = t('statsLbl')
+  document.getElementById('btn-back').title    = t('back')
+  document.getElementById('btn-fwd').title     = t('forward')
+  document.getElementById('btn-reload').title  = t('reload')
+  document.getElementById('btn-home').title    = t('home')
+  document.getElementById('go-btn').textContent= '[' + t('go').toUpperCase() + ']'
+  document.getElementById('btn-settings-tb').textContent = '⚙ ' + t('menuBtn').replace('⚙ ','')
+  document.getElementById('tstatus').textContent = t('secureLabel')
+  tabs.filter(t2 => !t2.url).forEach(t2 => {
+    const page = document.getElementById('page-' + t2.id)
+    if (!page) return
+    const ntInput = page.querySelector('.home-search')
+    if (!ntInput) return
+    page.querySelector('#home-search-input') && rebuildHomePage(t2, page)
+  })
+}
+
+// ═══════════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════════
+const THEME_STYLES = {
+  'green':          {bg:'#050a05',color:'#00ff41',border:'#1a3a1a'},
+  'specter':        {bg:'#000800',color:'#39ff14',border:'#004d00'},
+  'matrix-black':   {bg:'#001400',color:'#00ff41',border:'#004400'},
+  'blue':           {bg:'#000510',color:'#00b8ff',border:'#003366'},
+  'vanta':          {bg:'#000305',color:'#4fc3f7',border:'#0a2040'},
+  'cyan':           {bg:'#000f10',color:'#00fff5',border:'#005a60'},
+  'purple':         {bg:'#05000f',color:'#cc00ff',border:'#2a0055'},
+  'violet':         {bg:'#0c0015',color:'#aa00ff',border:'#3d0066'},
+  'neon':           {bg:'#050005',color:'#ff00ff',border:'#550055'},
+  'pink':           {bg:'#0f0008',color:'#ff69b4',border:'#6a0040'},
+  'red':            {bg:'#0f0000',color:'#ff2040',border:'#550010'},
+  'blood':          {bg:'#0a0000',color:'#ff3333',border:'#440000'},
+  'orange':         {bg:'#0f0600',color:'#ff8c00',border:'#6a3000'},
+  'ember':          {bg:'#080200',color:'#ff6b1a',border:'#5c1a00'},
+  'gold':           {bg:'#0a0800',color:'#ffd700',border:'#5a4400'},
+  'black-gold':     {bg:'#090700',color:'#ffd700',border:'#3d2e00'},
+  'light':          {bg:'#e2e8f0',color:'#1a56db',border:'#cbd5e1'},
+  'light-pink':     {bg:'#ffe4f0',color:'#db2777',border:'#f9a8d4'},
+  'light-mint':     {bg:'#ccfbf1',color:'#0d9488',border:'#99f6e4'},
+  'light-lavender': {bg:'#ede9fe',color:'#7c3aed',border:'#c4b5fd'},
+  'light-gold':     {bg:'#fef3c7',color:'#b45309',border:'#fcd34d'},
+  'snow':           {bg:'#f8f9fa',color:'#4c6ef5',border:'#ced4da'},
+  'cream':          {bg:'#fdf6e3',color:'#c97a00',border:'#ddc99a'},
+}
+
+function setTheme(name) {
+  localStorage.setItem('miau_theme', name)
+  document.body.setAttribute('data-theme', name)
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeSet === name))
+  updateAnimeGirl(name)
+  // Tüm açık home sekmelerini rebuild et — donma sorunu çözümü
+  tabs.forEach(tab => {
+    if (!tab.url) {
+      const page = document.getElementById('page-' + tab.id)
+      if (page) {
+        stopMatrix()
+        stopPetalAnim()
+        rebuildHomePage(tab, page)
+        if (tab.id === activeTabId) {
+          setTimeout(() => {
+            if (CUTE_THEMES.has(name) || THEME_SYMBOLS[name]) {
+              const cv = page.querySelector('.petal-canvas')
+              if (cv) startPetalAnim(cv, name)
+            } else {
+              const cv = page.querySelector('.matrix-canvas')
+              if (cv) startMatrix(cv)
+            }
+          }, 60)
+        }
+      }
+    }
+  })
+}
+
+function styleThemeBtns() {
+  document.querySelectorAll('.theme-btn[data-theme-set]').forEach(btn => {
+    const s = THEME_STYLES[btn.dataset.themeSet]
+    if (!s) return
+    btn.style.background   = s.bg
+    btn.style.color        = s.color
+    btn.style.borderColor  = s.border
+  })
+}
+
+// ═══════════════════════════════════════════════
+// TATLI TEMA ANİMASYONLARI — petal / yıldız / yaprak
+// ═══════════════════════════════════════════════
+const CUTE_THEMES = new Set([
+  'sakura-light','sakura-dark',
+  'dreamy-light','dreamy-dark',
+  'cottagecore-light','cottagecore-dark',
+  'sky','lavender','peach','mint',
+  'jerusalem-night','jerusalem-gold'
+])
+
+// Anime kız renkleri CSS filter ile yönetiliyor — updateAnimeGirl() içinde
+
+function updateAnimeGirl(theme) {
+  const girl = document.getElementById('anime-girl')
+  if (!girl) return
+  // Chibi kız sadece tatli temalarda
+  if (!CUTE_THEMES.has(theme)) { girl.classList.add('hidden'); return }
+  girl.classList.remove('hidden')
+  girl.style.filter = 'none'
+  initChibiEvents(girl)
+}
+
+// Chibi etkileşim eventleri — bir kez bağla
+function initChibiEvents(girl) {
+  if (girl._eventsReady) return
+  girl._eventsReady = true
+
+  const hearts = ['♥','♡','✿','✦','★','✧']
+  let clickTimer = null
+
+  // Tıklama: pop animasyonu + kalp patlaması
+  girl.addEventListener('click', (e) => {
+    girl.classList.remove('clicked')
+    void girl.offsetWidth // reflow — animasyonu sıfırla
+    girl.classList.add('clicked')
+    girl.classList.remove('excited')
+
+    // 3-5 arası kalp fırlat
+    const count = 3 + Math.floor(Math.random() * 3)
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => spawnHeart(e.clientX, e.clientY), i * 80)
+    }
+
+    clearTimeout(clickTimer)
+    clickTimer = setTimeout(() => girl.classList.remove('clicked'), 400)
+  })
+
+  // Arama kutusuna yazınca excited
+  document.addEventListener('keydown', (e) => {
+    const active = document.activeElement
+    if (active && active.id === 'home-search-input' && e.key.length === 1) {
+      if (!girl.classList.contains('excited') && !girl.classList.contains('clicked')) {
+        girl.classList.add('excited')
+        clearTimeout(girl._excitedTimer)
+        girl._excitedTimer = setTimeout(() => girl.classList.remove('excited'), 800)
+      }
+    }
+  })
+}
+
+function spawnHeart(cx, cy) {
+  const el = document.createElement('span')
+  el.className = 'chibi-heart'
+  el.textContent = ['♥','♡','✦','✿','★'][Math.floor(Math.random() * 5)]
+  const ox = (Math.random() - 0.5) * 60
+  el.style.left = (cx + ox) + 'px'
+  el.style.top  = (cy - 20) + 'px'
+  document.body.appendChild(el)
+  setTimeout(() => el.remove(), 950)
+}
+
+// Petal / yıldız / yaprak canvas animasyonu
+let petalAnimId = null
+
+// Tema bazlı sembol setleri
+const THEME_SYMBOLS = {
+  'sakura':           ['♥','♡','✿','❀','✾','˚','·','♪'],
+  'dreamy':           ['✦','★','✧','✶','·','˚','✩','☆'],
+  'cottagecore':      ['✿','❀','♧','✤','⁂','·','❁','꩜'],
+  'sky':              ['☁','✈','❄','·','˚','✦','○','◌'],
+  'lavender':         ['✿','♡','✧','˚','·','❀','✦','☽'],
+  'peach':            ['✿','♥','❀','˚','·','✾','♡','✤'],
+  'mint':             ['✿','✦','☘','·','˚','❀','♧','✤'],
+  'jerusalem-night':  ['✡','✡','✦','·','˚','★','✡','✩','☆','✡'],
+  'jerusalem-gold':   ['✡','✝','✡','✝','·','˚','✦','✡','✝','✧'],
+}
+const LIGHT_CANVAS_THEMES = new Set(['sky','lavender','peach','mint','jerusalem-gold'])
+
+function startPetalAnim(canvas, theme) {
+  if (!canvas) return
+  const parent = canvas.parentElement
+  const W = (parent ? parent.clientWidth : canvas.offsetWidth) || 1200
+  const H = (parent ? parent.clientHeight : canvas.offsetHeight) || 800
+  canvas.width = W; canvas.height = H
+  const ctx = canvas.getContext('2d')
+
+  const style = getComputedStyle(document.body)
+  const accentColor  = style.getPropertyValue('--accent').trim()  || '#ff6699'
+  const accent2Color = style.getPropertyValue('--accent2').trim() || '#ff3366'
+  const dimColor     = style.getPropertyValue('--dim').trim()     || '#ffaacc'
+
+  // Tema tipine göre sembol seti seç
+  const isJerusalem = theme.includes('jerusalem')
+  const themeKey = theme.includes('dreamy') ? 'dreamy'
+                 : theme.includes('cottagecore') ? 'cottagecore'
+                 : (THEME_SYMBOLS[theme] ? theme : 'sakura')
+  const symbols = THEME_SYMBOLS[themeKey]
+
+  // Beyaz/açık pastel temalarda canvas arka planı beyaz olsun
+  const isLightCanvas = LIGHT_CANVAS_THEMES.has(theme) || theme.includes('light')
+  const bgFade  = isLightCanvas ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.18)'
+  const bgStart = isLightCanvas ? 'rgba(0,0,0,0)'          : 'rgba(0,0,0,0.6)'
+  const headColor = isLightCanvas ? accentColor : (isJerusalem ? accentColor : '#fff')
+
+  // Jerusalem temada semboller daha büyük düşsün
+  const FONT_SIZE = isJerusalem ? 28 : 18
+  const cols = Math.floor(W / FONT_SIZE)
+
+  // Her kolon için durum
+  const drops = Array.from({ length: cols }, () => ({
+    y: Math.random() * -50,           // başlangıç y (canvas dışı)
+    speed: isJerusalem ? (0.15 + Math.random() * 0.35) : (0.3 + Math.random() * 0.7), // jerusalem daha yavaş
+    symbol: symbols[Math.floor(Math.random() * symbols.length)],
+    symbolTimer: 0,
+    symbolInterval: 20 + Math.floor(Math.random() * 40), // sembol değişim sıklığı
+    trailLen: 4 + Math.floor(Math.random() * 6),         // iz uzunluğu (karakter sayısı)
+    trail: [],                         // geçmiş pozisyonlar [{y, sym, alpha}]
+    color: [accentColor, accent2Color, dimColor][Math.floor(Math.random() * 3)],
+  }))
+
+  // Her kolon için x pozisyonu önceden hesapla
+  drops.forEach((d, i) => { d.x = i * FONT_SIZE })
+
+  let lastTime = 0
+  function draw(ts) {
+    const dt = Math.min(ts - lastTime, 50)
+    lastTime = ts
+
+    if (isLightCanvas) {
+      // Açık tema: önce sil, sonra hafif beyaz fade ile iz bırak
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = bgFade
+      ctx.fillRect(0, 0, W, H)
+    } else {
+      ctx.fillStyle = bgFade
+      ctx.fillRect(0, 0, W, H)
+    }
+
+    for (let i = 0; i < drops.length; i++) {
+      const d = drops[i]
+      d.y += d.speed * (dt / 16)
+
+      d.symbolTimer++
+      if (d.symbolTimer >= d.symbolInterval) {
+        d.symbolTimer = 0
+        d.symbol = symbols[Math.floor(Math.random() * symbols.length)]
+      }
+
+      // Baş karakter — parlak (koyu temada beyaz, açık temada accent)
+      ctx.globalAlpha = 0.95
+      ctx.fillStyle = headColor
+      ctx.shadowBlur = 10
+      ctx.shadowColor = d.color
+      ctx.font = `${FONT_SIZE}px serif`
+      ctx.fillText(d.symbol, d.x, d.y)
+
+      // İz karakterler
+      for (let j = 1; j <= d.trailLen; j++) {
+        const iy = d.y - j * FONT_SIZE
+        if (iy < 0) continue
+        const alpha = Math.max(0, 0.7 - j * (0.7 / d.trailLen))
+        ctx.globalAlpha = alpha
+        ctx.fillStyle = d.color
+        ctx.shadowBlur = 4
+        ctx.shadowColor = d.color
+        const trailSym = symbols[Math.floor((d.y / FONT_SIZE + j) * 7 + i * 3) % symbols.length]
+        ctx.fillText(trailSym, d.x, iy)
+      }
+
+      ctx.globalAlpha = 1
+      ctx.shadowBlur = 0
+
+      if (d.y > H + FONT_SIZE * d.trailLen) {
+        d.y = Math.random() * -H * 0.5
+        d.speed = isJerusalem ? (0.15 + Math.random() * 0.35) : (0.3 + Math.random() * 0.7)
+        d.color = [accentColor, accent2Color, dimColor][Math.floor(Math.random() * 3)]
+        d.trailLen = 4 + Math.floor(Math.random() * 6)
+        d.symbolInterval = 20 + Math.floor(Math.random() * 40)
+      }
+    }
+
+    canvas._petalId = requestAnimationFrame(draw)
+  }
+
+  if (canvas._petalId) cancelAnimationFrame(canvas._petalId)
+  // Canvas başlangıç arka planı
+  ctx.fillStyle = bgStart
+  ctx.fillRect(0, 0, W, H)
+  draw(performance.now())
+  petalAnimId = canvas._petalId
+}
+
+function stopPetalAnim() {
+  if (petalAnimId) { cancelAnimationFrame(petalAnimId); petalAnimId = null }
+  document.querySelectorAll('.petal-canvas').forEach(cv => {
+    if (cv._petalId) { cancelAnimationFrame(cv._petalId); cv._petalId = null }
+  })
+}
+
+// ═══════════════════════════════════════════════
+// MATRIX
+let matrixAnimId = null
+
+function startMatrix(canvas) {
+  if (!canvas) return
+  const parent = canvas.parentElement
+  const W = (parent ? parent.clientWidth : canvas.offsetWidth) || window.innerWidth || 1200
+  const H = (parent ? parent.clientHeight : canvas.offsetHeight) || window.innerHeight || 800
+  canvas.width = W; canvas.height = H
+  const ctx = canvas.getContext('2d')
+  const FONT = 13
+  const COLS = Math.floor(W / FONT)
+  const isPriv = !!canvas.closest('.private-home')
+
+  const accent = getComputedStyle(document.body).getPropertyValue('--matrix').trim() || '#00ff41'
+  const head  = '#ffffff'
+  const mid   = accent
+  const dim2  = accent + '88'
+  const fade  = isPriv ? 'rgba(0,0,2,0.045)' : 'rgba(0,0,0,0.045)'
+  ctx.clearRect(0, 0, W, H)
+
+  const cols = Array.from({length: COLS}, () => ({
+    y: Math.floor(Math.random() * -(H / FONT) * 2),
+    speed: 0.35 + Math.random() * 1.1,
+    trail: 8 + Math.floor(Math.random() * 18)
+  }))
+
+  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨ' +
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*<>{}[]|;:=+~!?/\\.'
+  const rChar = () => CHARS[Math.floor(Math.random() * CHARS.length)]
+
+  function draw() {
+    ctx.fillStyle = fade
+    ctx.fillRect(0, 0, W, H)
+    for (let i = 0; i < COLS; i++) {
+      const c = cols[i]
+      const iy = Math.floor(c.y)
+      if (iy < 0) { c.y += c.speed; continue }
+      const x = i * FONT
+      ctx.fillStyle = head
+      ctx.font = 'bold ' + FONT + 'px monospace'
+      ctx.fillText(rChar(), x, iy * FONT)
+      ctx.font = FONT + 'px monospace'
+      for (let k = 1; k <= c.trail; k++) {
+        const ty = (iy - k) * FONT
+        if (ty < 0) break
+        const r = k / c.trail
+        ctx.fillStyle = r < 0.4 ? mid : r < 0.7 ? dim2 : 'rgba(0,0,0,0)'
+        if (Math.random() < 0.05) ctx.fillText(rChar(), x, ty)
+      }
+      c.y += c.speed
+      if (c.y * FONT > H + FONT * 30) {
+        c.y = Math.floor(Math.random() * -30)
+        c.speed = 0.35 + Math.random() * 1.1
+        c.trail = 8 + Math.floor(Math.random() * 18)
+      }
+    }
+    canvas._matrixId = requestAnimationFrame(draw)
+  }
+  if (canvas._matrixId) cancelAnimationFrame(canvas._matrixId)
+  draw()
+  matrixAnimId = canvas._matrixId
+}
+
+// ✅ stopMatrix artık tüm canvas'ları temizliyor
+function stopMatrix() {
+  if (matrixAnimId) { cancelAnimationFrame(matrixAnimId); matrixAnimId = null }
+  document.querySelectorAll('.matrix-canvas').forEach(cv => {
+    if (cv._matrixId) { cancelAnimationFrame(cv._matrixId); cv._matrixId = null }
+  })
+}
+
+// ── SAAT ──────────────────────────────────────────
+let _clockInterval = null
+
+function startClock() {
+  stopClock()
+  updateClock()
+  _clockInterval = setInterval(updateClock, 1000)
+}
+
+function stopClock() {
+  if (_clockInterval) { clearInterval(_clockInterval); _clockInterval = null }
+}
+
+function updateClock() {
+  const el = document.getElementById('home-clock-display')
+  if (!el) { stopClock(); return }
+  const now = new Date()
+  const h = String(now.getHours()).padStart(2, '0')
+  const m = String(now.getMinutes()).padStart(2, '0')
+  const s = String(now.getSeconds()).padStart(2, '0')
+  el.textContent = `${h}:${m}:${s}`
+}
+
+// ── PERFORMANS: Sekme gizlenince animasyonu durdur ──
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    stopMatrix()
+    stopPetalAnim()
+  } else {
+    // Sekme tekrar görününce yeniden başlat
+    const tab = tabs.find(t2 => t2.id === activeTabId)
+    if (!tab?.url) {
+      const page = document.getElementById('page-' + activeTabId)
+      const theme = document.body.getAttribute('data-theme') || 'green'
+      if (CUTE_THEMES.has(theme)) {
+        const cv = page?.querySelector('.petal-canvas')
+        if (cv) startPetalAnim(cv, theme)
+      } else {
+        const cv = page?.querySelector('.matrix-canvas')
+        if (cv) startMatrix(cv)
+      }
+    }
+  }
+})
+
+// ═══════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════
+let tabs = []
+let activeTabId = null
+const privateSessions = new Map()
+
+function genId(){ return 't' + Date.now() + Math.random().toString(36).slice(2,6) }
+
+function createTab({ url='', priv=false, tabId=null, partition=null } = {}) {
+  const id = genId()
+  const tab = { id, title: priv ? t('privTab') : t('newTab'), url, priv, tabId, partition, wv:null, history:[], histIdx:-1, loading:false }
+  tabs.push(tab)
+  renderTabBar()
+  const page = document.createElement('div')
+  page.id = 'page-' + id
+  page.className = 'tab-page'
+  document.getElementById('viewport').appendChild(page)
+  rebuildHomePage(tab, page)
+  switchTab(id)
+  if (url) navigate(id, url)
+  return id
+}
+
+function closeTab(id) {
+  const tab = tabs.find(t2 => t2.id === id)
+  if (!tab) return
+  // Son kapatılan sekmelere kaydet
+  if (tab.url) {
+    closedTabs.push({ url: tab.url, title: tab.title, zoom: tab.zoom || 1.0 })
+    if (closedTabs.length > 20) closedTabs.shift()
+  }
+  if (tab.priv && tab.tabId) api.send('close-private-tab', tab.tabId)
+  darkReaderKeys.delete(id)
+  stopMatrix()
+  const page = document.getElementById('page-' + id)
+  if (page) page.remove()
+  const idx = tabs.findIndex(t2 => t2.id === id)
+  tabs.splice(idx, 1)
+  if (tabs.length === 0) { createTab(); return }
+  renderTabBar()
+  if (activeTabId === id) switchTab(tabs[Math.min(idx, tabs.length-1)].id)
+}
+
+function switchTab(id) {
+  stopMatrix()
+  stopPetalAnim()
+  if (typeof closeFind === 'function') closeFind()
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('visible'))
+  activeTabId = id
+  const page = document.getElementById('page-' + id)
+  if (page) page.classList.add('visible')
+  renderTabBar()
+  syncToolbar()
+  applyZoomToTab(id)
+  const tab = tabs.find(t2 => t2.id === id)
+  const currentTheme = document.body.getAttribute('data-theme') || 'green'
+  if (!tab?.url) {
+    if (CUTE_THEMES.has(currentTheme) || THEME_SYMBOLS[currentTheme]) {
+      const canvas = page?.querySelector('.petal-canvas')
+      if (canvas) setTimeout(() => startPetalAnim(canvas, currentTheme), 60)
+    } else {
+      const canvas = page?.querySelector('.matrix-canvas')
+      if (canvas) setTimeout(() => startMatrix(canvas), 60)
+    }
+    startClock()
+  } else {
+    stopClock()
+  }
+}
+
+function renderTabBar() {
+  const scroll = document.getElementById('tab-scroll')
+  scroll.innerHTML = ''
+  tabs.forEach(tab => {
+    const el = document.createElement('div')
+    el.className = 'tab' + (tab.id === activeTabId ? ' active' : '') + (tab.priv ? ' private-tab' : '') + (tab.loading ? ' loading' : '')
+    el.dataset.id = tab.id
+    const privIcon = tab.priv
+      ? `<span class="tab-eye"><span class="tab-eye-inner"></span></span>`
+      : tab.favicon
+        ? `<img class="tab-favicon" src="${escHtml(tab.favicon)}" onerror="this.style.display='none'">`
+        : `<span class="tab-icon">◉</span>`
+    const muteIcon = tab.muted ? `<span class="tab-mute" title="Sesi Aç">🔇</span>`
+                   : tab.audible ? `<span class="tab-mute" title="Sesi Kapat">🔊</span>` : ''
+    el.innerHTML = `${privIcon}<span class="tab-title">${escHtml(tab.title)}</span>${muteIcon}<span class="tab-x">✕</span>`
+    el.addEventListener('click', e => {
+      if (e.target.classList.contains('tab-x')) return
+      if (e.target.classList.contains('tab-mute')) { toggleMute(tab.id); return }
+      switchTab(tab.id)
+    })
+    el.querySelector('.tab-x').addEventListener('click', e => { e.stopPropagation(); closeTab(tab.id) })
+    scroll.appendChild(el)
+  })
+}
+
+// ═══════════════════════════════════════════════
+// HOME PAGE
+// ═══════════════════════════════════════════════
+function rebuildHomePage(tab, page) {
+  stopMatrix()
+  stopPetalAnim()
+  const currentTheme = document.body.getAttribute('data-theme') || 'green'
+  const isCute = CUTE_THEMES.has(currentTheme)
+  const privClass = tab.priv ? 'private-home' : ''
+  // Gizli mod + tatlı tema → atan kalp; gizli mod + normal tema → göz
+  const logoHtml = tab.priv
+    ? isCute
+      ? `<div class="private-heart-logo">
+          <div class="private-heart-wrap">
+            <div class="private-heart-orbit">
+              <span class="private-heart-mini">♡</span>
+              <span class="private-heart-mini">♡</span>
+              <span class="private-heart-mini">♡</span>
+              <span class="private-heart-mini">♡</span>
+            </div>
+            <span class="private-heart-main">♥</span>
+          </div>
+          <div class="eye-label" style="color:var(--accent)">// PRIVATE MODE //</div>
+        </div>`
+      : `<div class="eye-logo">
+          <div class="eye-wrap">
+            <div class="eye-ring"></div>
+            <div class="eye-shape">
+              <div class="eye-lash-top"></div>
+              <div class="eye-lash-bot"></div>
+              <div class="eye-iris"><div class="eye-pupil"></div></div>
+              <div class="eye-scan"></div>
+            </div>
+          </div>
+          <div class="eye-label">// PRIVATE MODE //</div>
+        </div>`
+    : `<div class="home-logo" data-text="MIAU">MIAU</div>`
+  const clockEl = tab.priv ? '' : `<div class="home-clock" id="home-clock-display"></div>`
+  const tagline = tab.priv ? '' : `<div class="home-tagline">SECURE BROWSER — leopanoriginal</div>`
+  const prefix = `<div class="nt-prefix">${tab.priv ? t('privNtPrefix') : t('ntPrefix')}</div>`
+  const infoTxt = tab.priv ? t('privNtInfo') : t('ntInfo')
+  const ph = tab.priv ? t('privNtPlaceholder') : t('ntPlaceholder')
+  const canvasEl = isCute
+    ? `<canvas class="petal-canvas"></canvas>`
+    : `<canvas class="matrix-canvas"></canvas>`
+  page.innerHTML = `<div class="home-screen ${privClass}">
+    ${canvasEl}
+    ${logoHtml}
+    ${clockEl}
+    ${tagline}
+    ${prefix}
+    <div class="home-search">
+      <div class="hs-icon">⌕</div>
+      <input id="home-search-input" type="text" placeholder="${ph}" autocomplete="off" spellcheck="false">
+      <button class="hs-btn">[SEARCH]</button>
+    </div>
+    ${!tab.priv ? `<div class="qa-grid" id="qa-grid">${renderQuickAccess()}</div>` : ''}
+    <div class="nt-info">${infoTxt}<span class="nt-cursor"></span></div>
+  </div>`
+  const input = page.querySelector('#home-search-input')
+  const btn   = page.querySelector('.hs-btn')
+  if (input && btn) {
+    btn.addEventListener('click', () => navigate(tab.id, input.value))
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') navigate(tab.id, input.value) })
+  }
+  bindQuickAccess(page)
+  // Aktif sekmedeyse saati başlat
+  if (tab.id === activeTabId) startClock()
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function resolveUrl(input) {
+  input = input.trim()
+  if (!input) return null
+  if (/^https?:\/\//i.test(input)) return input
+  if (/^[a-z0-9-]+(\.[a-z]{2,})(\/|$)/i.test(input)) return 'https://' + input
+  return null
+}
+
+async function navigate(tabId, raw) {
+  const tab = tabs.find(t2 => t2.id === tabId)
+  if (!tab) return
+  raw = raw?.trim()
+  if (!raw) return
+  const resolved = resolveUrl(raw)
+  const finalUrl = resolved || await api.invoke('get-search-url', raw)
+  tab.url = finalUrl
+  const risk = await api.invoke('check-phishing', finalUrl)
+  const page = document.getElementById('page-' + tabId)
+  if (!page) return
+  if (/\.pdf(\?|$)/i.test(finalUrl)) { showPdf(page, tab, finalUrl); return }
+  showWebview(page, tab, finalUrl)
+  tab.history = tab.history.slice(0, tab.histIdx + 1)
+  tab.history.push(finalUrl); tab.histIdx = tab.history.length - 1
+  if (tabId === activeTabId) syncToolbar()
+  if (risk) showPhish(page, risk)
+}
+
+// ✅ DÜZELTME 2 + 3: webpreferences eklendi, new-window handler güçlendirildi
+function showWebview(page, tab, url) {
+  stopMatrix()
+  page.innerHTML = ''
+  const wv = document.createElement('webview')
+  wv.setAttribute('src', url)
+  wv.setAttribute('allowpopups', '')
+  wv.setAttribute('allowfullscreen', '')
+  wv.setAttribute('webpreferences', 'nativeWindowOpen=no,contextIsolation=yes,allowRunningInsecureContent=no')
+  if (tab.priv && tab.partition) wv.setAttribute('partition', tab.partition)
+  page.appendChild(wv)
+  tab.wv = wv; tab.loading = true
+  renderTabBar()
+  wv.addEventListener('did-start-loading', () => {
+    tab.loading = true
+    if (tab.id === activeTabId) { syncToolbar(); startProgress() }
+    renderTabBar()
+  })
+  wv.addEventListener('did-stop-loading', async () => {
+    tab.loading = false; tab.url = wv.getURL(); tab.title = wv.getTitle() || tab.url
+    if (tab.id === activeTabId) finishProgress()
+    if (tab.url) {
+      tab.favicon = getFaviconUrl(tab.url)
+      if (!tab.priv) addHistory(tab.url, tab.title)
+    }
+    try { wv.setZoomFactor(tab.zoom || 1.0) } catch {}
+    renderTabBar(); if (tab.id === activeTabId) { syncToolbar(); applyZoomToTab(tab.id) }
+    try { const fp = await api.invoke('get-fp-script'); if (fp) await wv.executeJavaScript(fp).catch(()=>{}) } catch {}
+    try { await wv.insertCSS('[id*="google_ads"],[class*="adsbygoogle"],[id*="taboola"],[id*="outbrain"],[class*="ad-banner"],ins.adsbygoogle,#carbonads,.carbon-ads,[data-ad-slot],.advertisement{display:none!important}') } catch {}
+    // Sayfa yenilendi → dark reader key geçersiz, sıfırla
+    darkReaderKeys.delete(tab.id)
+    // Dark reader açıksa yeni sayfaya uygula
+    try {
+      const drOn = await api.invoke('get-dark-reader')
+      if (drOn) {
+        const css = await api.invoke('get-dark-reader-css')
+        const key = await wv.insertCSS(css)
+        darkReaderKeys.set(tab.id, key)
+      }
+    } catch {}
+  })
+  wv.addEventListener('page-title-updated', e => { tab.title = e.title || tab.url; renderTabBar() })
+  wv.addEventListener('did-navigate', e => { tab.url = e.url; if (tab.id === activeTabId) syncToolbar() })
+  wv.addEventListener('did-navigate-in-page', e => { tab.url = e.url; if (tab.id === activeTabId) syncToolbar() })
+  wv.addEventListener('new-window', e => {
+    e.preventDefault()
+    if (e.url && (e.url.startsWith('http://') || e.url.startsWith('https://'))) {
+      createTab({ url: e.url, priv: tab.priv, partition: tab.partition, tabId: tab.tabId })
+    }
+  })
+}
+
+async function showPdf(page, tab, url) {
+  if (!window.pdfjsLib) { showWebview(page, tab, url); return }
+  stopMatrix()
+  page.innerHTML = `<div class="pdf-viewer-wrap">
+    <div class="pdf-tb">
+      <button id="pdf-prev">◀</button>
+      <span id="pdf-info">Loading…</span>
+      <button id="pdf-next">▶</button>
+      <button id="pdf-zin">+</button>
+      <button id="pdf-zout">-</button>
+    </div>
+    <div id="pdf-wrap" style="flex:1;overflow:auto;display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px;background:#525659"></div>
+  </div>`
+  try {
+    const doc = await pdfjsLib.getDocument(url).promise
+    let scale = 1.5, curPage = 1
+    const total = doc.numPages
+    const wrap = document.getElementById('pdf-wrap')
+    async function renderPage(n) {
+      const pg = await doc.getPage(n); const vp = pg.getViewport({ scale })
+      let cv = wrap.querySelector('canvas'); if (!cv) { cv = document.createElement('canvas'); wrap.appendChild(cv) }
+      cv.width = vp.width; cv.height = vp.height
+      await pg.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise
+      document.getElementById('pdf-info').textContent = `Page ${n} / ${total}`
+    }
+    document.getElementById('pdf-prev').onclick = () => { if (curPage > 1) renderPage(--curPage) }
+    document.getElementById('pdf-next').onclick = () => { if (curPage < total) renderPage(++curPage) }
+    document.getElementById('pdf-zin').onclick  = () => { scale += 0.25; renderPage(curPage) }
+    document.getElementById('pdf-zout').onclick = () => { scale = Math.max(0.5, scale - 0.25); renderPage(curPage) }
+    renderPage(1); tab.title = 'PDF: ' + url.split('/').pop(); renderTabBar()
+  } catch(e) { page.innerHTML = `<div style="color:var(--red);padding:24px">PDF Error: ${escHtml(String(e))}</div>` }
+}
+
+function showPhish(page, risk) {
+  let bar = page.querySelector('.phish-bar')
+  if (!bar) {
+    bar = document.createElement('div'); bar.className = 'phish-bar'
+    bar.innerHTML = `<span class="ph-text">⚠️ <strong>PHISHING WARNING</strong>: <span class="ph-reason"></span></span><button onclick="this.parentElement.classList.add('hidden')">Ignore</button>`
+    page.prepend(bar)
+  }
+  bar.querySelector('.ph-reason').textContent = risk.reason
+  bar.classList.remove('hidden')
+}
+
+// ═══════════════════════════════════════════════
+// TOOLBAR SYNC
+// ═══════════════════════════════════════════════
+function syncToolbar() {
+  const tab = tabs.find(t2 => t2.id === activeTabId)
+  if (!tab) return
+  document.getElementById('url-bar').value = tab.url || ''
+  const badge = document.getElementById('sec-badge')
+  if (tab.priv) { badge.className = 'sec-badge warn'; badge.textContent = '🕵' }
+  else if (!tab.url || tab.url.startsWith('https://')) { badge.className = 'safe'; badge.textContent = '🔒' }
+  else { badge.className = 'warn'; badge.textContent = '⚠️' }
+  document.getElementById('btn-back').style.opacity = (!tab.wv || tab.histIdx <= 0) ? '.3' : '1'
+  document.getElementById('btn-fwd').style.opacity  = (!tab.wv || tab.histIdx >= tab.history.length-1) ? '.3' : '1'
+  document.getElementById('btn-reload').textContent = tab.loading ? '✕' : '↺'
+  // Yer imi yıldızı güncelle
+  if (tab.url) {
+    api.invoke('check-bookmark', tab.url).then(is => {
+      const btn = document.getElementById('btn-bookmark')
+      btn.classList.toggle('bookmarked', is)
+      btn.textContent = is ? '★' : '☆'
+    }).catch(() => {})
+  } else {
+    const btn = document.getElementById('btn-bookmark')
+    btn.classList.remove('bookmarked')
+    btn.textContent = '☆'
+  }
+}
+
+// ═══════════════════════════════════════════════
+// TOOLBAR EVENTS
+// ═══════════════════════════════════════════════
+document.getElementById('btn-back').addEventListener('click', () => {
+  const tab = tabs.find(t2 => t2.id === activeTabId); if (!tab?.wv) return
+  if (tab.histIdx > 0) { tab.histIdx--; tab.wv.goBack() }
+})
+document.getElementById('btn-fwd').addEventListener('click', () => {
+  const tab = tabs.find(t2 => t2.id === activeTabId); if (!tab?.wv) return
+  if (tab.histIdx < tab.history.length-1) { tab.histIdx++; tab.wv.goForward() }
+})
+document.getElementById('btn-reload').addEventListener('click', () => {
+  const tab = tabs.find(t2 => t2.id === activeTabId); if (!tab?.wv) return
+  tab.loading ? tab.wv.stop() : tab.wv.reload()
+})
+document.getElementById('btn-home').addEventListener('click', () => {
+  const tab = tabs.find(t2 => t2.id === activeTabId); if (!tab) return
+  tab.url = ''; tab.wv = null; tab.title = tab.priv ? t('privTab') : t('newTab')
+  const page = document.getElementById('page-' + activeTabId)
+  rebuildHomePage(tab, page)
+  renderTabBar(); syncToolbar()
+  setTimeout(() => { const cv = page.querySelector('.matrix-canvas'); if (cv) startMatrix(cv) }, 60)
+})
+document.getElementById('url-bar').addEventListener('keydown', e => { if (e.key === 'Enter') navigate(activeTabId, document.getElementById('url-bar').value) })
+document.getElementById('go-btn').addEventListener('click', () => navigate(activeTabId, document.getElementById('url-bar').value))
+document.getElementById('url-bar').addEventListener('focus', () => document.getElementById('url-bar').select())
+document.getElementById('btn-ss').addEventListener('click', async () => {
+  const tab = tabs.find(t2 => t2.id === activeTabId); if (!tab?.wv) return
+  try { const img = await tab.wv.capturePage(); const p = await api.invoke('save-screenshot', img.toDataURL()); if (p) notify('📷 ' + t('screenshot')) } catch {}
+})
+document.getElementById('btn-new-tab').addEventListener('click', () => createTab())
+document.getElementById('btn-new-priv').addEventListener('click', () => api.send('open-private-tab'))
+document.getElementById('wb-min').addEventListener('click', () => api.send('minimize'))
+document.getElementById('wb-max').addEventListener('click', () => api.send('maximize'))
+document.getElementById('wb-fs').addEventListener('click', () => api.send('toggle-fullscreen'))
+document.getElementById('wb-cls').addEventListener('click', () => api.send('close'))
+function handleTitlebarDblClick(e) { if (e.target.closest('.wb') || e.target.closest('.tab')) return; api.send('toggle-fullscreen') }
+
+// ═══════════════════════════════════════════════
+// SETTINGS PANEL
+// ═══════════════════════════════════════════════
+const settingsPanel = document.getElementById('settings-panel')
+document.getElementById('btn-settings-tb').addEventListener('click', async () => {
+  settingsPanel.classList.add('show')
+  const sec = await api.invoke('get-security-settings')
+  document.getElementById('tog-https').checked = sec.httpsOnly
+  document.getElementById('tog-track').checked = sec.trackingProtection
+  const ab = await api.invoke('get-adblock-state')
+  document.getElementById('tog-ad').checked = ab.enabled
+  const { engines, active } = await api.invoke('get-search-engines')
+  const sel = document.getElementById('engine-select')
+  sel.innerHTML = Object.keys(engines).map(k => `<option value="${escHtml(k)}"${k===active?' selected':''}>${escHtml(k)}</option>`).join('')
+  renderStats(ab)
+  // Dark Reader durumu
+  const drEnabled = await api.invoke('get-dark-reader')
+  document.getElementById('tog-dark-reader').checked = drEnabled
+  document.getElementById('btn-dark-reader').classList.toggle('active', drEnabled)
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeSet === document.body.getAttribute('data-theme')))
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang))
+})
+document.getElementById('sp-close').addEventListener('click', () => settingsPanel.classList.remove('show'))
+
+document.querySelectorAll('.sp-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.sp-tab').forEach(t2 => t2.classList.remove('active'))
+    document.querySelectorAll('.sp-section').forEach(s => s.classList.remove('active'))
+    tab.classList.add('active')
+    document.getElementById('sp-' + tab.dataset.sp)?.classList.add('active')
+  })
+})
+
+document.querySelectorAll('[data-theme-set]').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.themeSet)))
+
+document.getElementById('tog-https').addEventListener('change', e => api.invoke('set-security-settings', { httpsOnly: e.target.checked }))
+document.getElementById('tog-track').addEventListener('change', e => api.invoke('set-security-settings', { trackingProtection: e.target.checked }))
+document.getElementById('tog-ad').addEventListener('change', e => api.invoke('set-adblock', e.target.checked))
+document.getElementById('engine-select').addEventListener('change', e => api.invoke('set-search-engine', e.target.value))
+
+// ── DARK READER ──────────────────────────────────────────
+document.getElementById('tog-dark-reader').addEventListener('change', async e => {
+  const enabled = e.target.checked
+  await api.invoke('set-dark-reader', enabled)
+  applyDarkReaderToActive(enabled)
+  document.getElementById('btn-dark-reader').classList.toggle('active', enabled)
+  notify(enabled ? '🌙 Dark Reader açık' : '☀️ Dark Reader kapalı')
+})
+
+document.getElementById('btn-dark-reader').addEventListener('click', async () => {
+  const tog = document.getElementById('tog-dark-reader')
+  tog.checked = !tog.checked
+  tog.dispatchEvent(new Event('change'))
+})
+
+api.on('dark-reader-changed', enabled => {
+  applyDarkReaderToActive(enabled)
+  document.getElementById('btn-dark-reader').classList.toggle('active', enabled)
+})
+
+// Her tab için dark reader CSS key'ini sakla — script başında tanımlandı (darkReaderKeys)
+
+async function applyDarkReaderToActive(enabled) {
+  const tab = tabs.find(t => t.id === activeTabId)
+  if (!tab?.wv) return
+  if (enabled) {
+    try {
+      const css = await api.invoke('get-dark-reader-css')
+      const key = await tab.wv.insertCSS(css)
+      darkReaderKeys.set(tab.id, key)
+    } catch {}
+  } else {
+    try {
+      const key = darkReaderKeys.get(tab.id)
+      if (key) {
+        await tab.wv.removeInsertedCSS(key)
+        darkReaderKeys.delete(tab.id)
+      } else {
+        // Key yoksa (eski yöntemle eklenmişse) sayfayı yenile
+        tab.wv.reload()
+      }
+    } catch {
+      // removeInsertedCSS başarısız olursa yenile
+      try { tab.wv.reload() } catch {}
+    }
+  }
+}
+
+// ── YER İMLERİ ──────────────────────────────────────────
+document.getElementById('btn-bookmark').addEventListener('click', async () => {
+  const tab = tabs.find(t => t.id === activeTabId)
+  if (!tab?.url) return
+  const isBookmarked = await api.invoke('check-bookmark', tab.url)
+  if (isBookmarked) {
+    const bms = await api.invoke('get-bookmarks')
+    const bm = bms.find(b => b.url === tab.url)
+    if (bm) await api.invoke('remove-bookmark', bm.id)
+    document.getElementById('btn-bookmark').classList.remove('bookmarked')
+    document.getElementById('btn-bookmark').textContent = '☆'
+    notify('🗑 Yer imi kaldırıldı')
+  } else {
+    await api.invoke('add-bookmark', {
+      url:   tab.url,
+      title: tab.title || tab.url,
+    })
+    document.getElementById('btn-bookmark').classList.add('bookmarked')
+    document.getElementById('btn-bookmark').textContent = '★'
+    notify('★ Yer imine eklendi!')
+  }
+})
+
+async function renderBookmarks() {
+  const list = document.getElementById('bm-list')
+  if (!list) return
+  const bms = await api.invoke('get-bookmarks')
+  if (!bms.length) {
+    list.innerHTML = '<div class="bm-empty">Henüz yer imi yok.<br>☆ butonuyla ekleyebilirsin.</div>'
+    return
+  }
+  list.innerHTML = bms.map(bm => {
+    const domain = (() => { try { return new URL(bm.url).hostname } catch { return '' } })()
+    const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : ''
+    const faviconEl = faviconUrl
+      ? `<img class="bm-favicon" src="${faviconUrl}" onerror="this.style.display='none'">`
+      : `<div class="bm-favicon-default">🔖</div>`
+    return `<div class="bm-item" data-url="${escHtml(bm.url)}" data-id="${bm.id}">
+      ${faviconEl}
+      <div class="bm-info">
+        <div class="bm-title">${escHtml(bm.title || bm.url)}</div>
+        <div class="bm-url">${escHtml(bm.url)}</div>
+      </div>
+      <div class="bm-del" data-id="${bm.id}" title="Kaldır">✕</div>
+    </div>`
+  }).join('')
+
+  list.querySelectorAll('.bm-item').forEach(el => {
+    el.addEventListener('click', e => {
+      if (e.target.classList.contains('bm-del')) return
+      navigate(activeTabId, el.dataset.url)
+      document.getElementById('settings-panel').classList.remove('show')
+    })
+  })
+  list.querySelectorAll('.bm-del').forEach(el => {
+    el.addEventListener('click', async e => {
+      e.stopPropagation()
+      await api.invoke('remove-bookmark', parseInt(el.dataset.id))
+      renderBookmarks()
+    })
+  })
+}
+
+// Yer imleri sekmesine tıklayınca render et
+document.getElementById('spt-bm')?.addEventListener('click', () => renderBookmarks())
+
+document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => { applyLang(b.dataset.lang); notify('🌐 ' + (b.dataset.lang === 'he' ? 'עברית' : 'English')) }))
+
+document.getElementById('btn-sd-run').addEventListener('click', async () => {
+  const opts = {
+    clearHistory: document.getElementById('sd-history').checked,
+    clearCookies: document.getElementById('sd-cookies').checked,
+    clearCache:   document.getElementById('sd-cache').checked,
+    timeDelay:    parseInt(document.getElementById('sd-delay').value) || 0
+  }
+  await api.invoke('self-destruct', opts)
+  notify('💥 ' + (opts.timeDelay > 0 ? opts.timeDelay + ' ' + t('sdMin') + ' ...' : t('sdRun')))
+})
+
+// ═══════════════════════════════════════════════
+// IPC EVENTS
+// ═══════════════════════════════════════════════
+window._perf = { rss: 0, heap: 0, heapTotal: 0 }
+window._sessionStart = Date.now()
+api.on('ram-update', d => {
+  window._perf = d
+  // Ayarlar açıksa canlı güncelle
+  if (document.getElementById('settings-panel')?.classList.contains('show') &&
+      document.getElementById('sp-stats')?.classList.contains('active')) {
+    renderStats()
+  }
+})
+
+function renderStats(ab) {
+  const p = window._perf
+  const RSS_MAX  = 600  // MB üst sınır (bar için)
+  const HEAP_MAX = 300
+
+  const rssW   = Math.min(100, Math.round(p.rss  / RSS_MAX  * 100))
+  const heapW  = Math.min(100, Math.round(p.heap / HEAP_MAX * 100))
+  const rssBar = rssW > 80 ? 'danger' : rssW > 55 ? 'warn' : ''
+  const heapBar= heapW > 80 ? 'danger' : heapW > 55 ? 'warn' : ''
+
+  const adsTotal = ab?.stats?.total ?? window._lastAbStats ?? '—'
+  if (ab) window._lastAbStats = ab.stats.total
+
+  // Oturum süresi
+  const upSec  = Math.floor((Date.now() - window._sessionStart) / 1000)
+  const upMin  = Math.floor(upSec / 60)
+  const upH    = Math.floor(upMin / 60)
+  const upStr  = upH > 0 ? upH + 'sa ' + (upMin%60) + 'dk' : upMin + 'dk ' + (upSec%60) + 'sn'
+
+  // Sekme sayısı
+  const tabCount = typeof tabs !== 'undefined' ? tabs.length : '—'
+  const privCount = typeof tabs !== 'undefined' ? tabs.filter(t=>t.priv).length : 0
+
+  document.getElementById('stats-display').innerHTML = `
+    <div class="stat-line">
+      <span style="color:var(--muted);font-weight:normal">RSS (Toplam)</span>
+      <div class="stat-bar-wrap"><div class="stat-bar ${rssBar}" style="width:${rssW}%"></div></div>
+      <span>${p.rss} MB</span>
+    </div>
+    <div class="stat-line">
+      <span style="color:var(--muted);font-weight:normal">Heap (JS)</span>
+      <div class="stat-bar-wrap"><div class="stat-bar ${heapBar}" style="width:${heapW}%"></div></div>
+      <span>${p.heap} MB</span>
+    </div>
+    <div class="stat-line">
+      <span style="color:var(--muted);font-weight:normal">Heap Limit</span>
+      <div class="stat-bar-wrap"><div class="stat-bar" style="width:${Math.min(100,Math.round(p.heap/(p.heapTotal||300)*100))}%"></div></div>
+      <span>${p.heapTotal || '—'} MB</span>
+    </div>`
+
+  document.getElementById('stats-session').innerHTML = `
+    <div class="stat-line">
+      <span style="color:var(--muted);font-weight:normal">Reklam Engellendi</span>
+      <span>${adsTotal}</span>
+    </div>
+    <div class="stat-line">
+      <span style="color:var(--muted);font-weight:normal">Açık Sekme</span>
+      <span>${tabCount}${privCount > 0 ? ' <span style="color:var(--dim);font-size:9px">('+privCount+' gizli)</span>' : ''}</span>
+    </div>
+    <div class="stat-line">
+      <span style="color:var(--muted);font-weight:normal">Oturum Süresi</span>
+      <span>${upStr}</span>
+    </div>`
+}
+api.on('download-started',  d => addDlItem(d))
+api.on('download-progress', d => updateDlItem(d))
+api.on('download-done',     d => finishDlItem(d))
+api.on('download-blocked',  d => notify('⛔ ' + d.filename))
+api.on('self-destruct-done',  () => notify('💥 Done'))
+api.on('permission-denied', d => notify('🚫 ' + d.permission))
+api.on('update-available',  () => notify('🔄 Update available'))
+api.on('update-downloaded', () => notify('✅ Update ready'))
+api.on('fullscreen-changed', f => {
+  document.body.classList.toggle('fullscreen', f)
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const tab = tabs.find(t2 => t2.id === activeTabId)
+    if (!tab?.url) {
+      const page = document.getElementById('page-' + activeTabId)
+      const canvas = page?.querySelector('.matrix-canvas')
+      if (canvas) { stopMatrix(); startMatrix(canvas) }
+    }
+  }))
+})
+api.on('open-in-new-tab', url => {
+  createTab({ url })
+})
+api.on('open-private-tab', ({ tabId, partition }) => {
+  createTab({ priv: true, tabId, partition })
+  notify('🕵 ' + t('privTab'))
+})
+api.on('save-session-request', () => {
+  const pub = tabs.filter(t2 => !t2.priv).map(t2 => ({ url: t2.url, title: t2.title }))
+  api.invoke('save-session', pub)
+})
+
+// ═══════════════════════════════════════════════
+// BROWSING HISTORY
+// ═══════════════════════════════════════════════
+const MAX_HISTORY = 500
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem('miau_history') || '[]') } catch { return [] }
+}
+function addHistory(url, title) {
+  if (!url || url === '' || url.startsWith('about:')) return
+  const hist = getHistory()
+  // Aynı URL varsa sil (en üste taşı)
+  const existing = hist.findIndex(h => h.url === url)
+  if (existing !== -1) hist.splice(existing, 1)
+  hist.unshift({ url, title: title || url, time: Date.now() })
+  if (hist.length > MAX_HISTORY) hist.length = MAX_HISTORY
+  localStorage.setItem('miau_history', JSON.stringify(hist))
+}
+function clearHistory() {
+  localStorage.removeItem('miau_history')
+  renderHistory()
+  notify('🗑 Geçmiş temizlendi')
+}
+function renderHistory(filter = '') {
+  const list = document.getElementById('history-list')
+  if (!list) return
+  let hist = getHistory()
+  if (filter) {
+    const q = filter.toLowerCase()
+    hist = hist.filter(h => h.url.toLowerCase().includes(q) || (h.title||'').toLowerCase().includes(q))
+  }
+  if (!hist.length) {
+    list.innerHTML = `<div class="hist-empty">${filter ? 'Sonuç bulunamadı.' : 'Henüz geçmiş yok.'}</div>`
+    return
+  }
+  list.innerHTML = hist.map((h, i) => {
+    const domain = (() => { try { return new URL(h.url).hostname } catch { return '' } })()
+    const favUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : ''
+    const favEl = favUrl ? `<img class="hist-favicon" src="${favUrl}" onerror="this.style.display='none'">` : '<span style="width:14px"></span>'
+    const dt = new Date(h.time)
+    const timeStr = dt.toLocaleDateString('tr-TR', {day:'2-digit',month:'2-digit'}) + ' ' + dt.toLocaleTimeString('tr-TR', {hour:'2-digit',minute:'2-digit'})
+    return `<div class="hist-item" data-idx="${i}" data-url="${escHtml(h.url)}">
+      ${favEl}
+      <div class="hist-info">
+        <div class="hist-title">${escHtml(h.title || h.url)}</div>
+        <div class="hist-url">${escHtml(h.url)}</div>
+      </div>
+      <span class="hist-time">${timeStr}</span>
+      <span class="hist-del" data-idx="${i}">✕</span>
+    </div>`
+  }).join('')
+  list.querySelectorAll('.hist-item').forEach(el => {
+    el.addEventListener('click', e => {
+      if (e.target.classList.contains('hist-del')) return
+      navigate(activeTabId, el.dataset.url)
+      document.getElementById('settings-panel').classList.remove('show')
+    })
+  })
+  list.querySelectorAll('.hist-del').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation()
+      const hist2 = getHistory()
+      hist2.splice(parseInt(el.dataset.idx), 1)
+      localStorage.setItem('miau_history', JSON.stringify(hist2))
+      renderHistory(document.getElementById('history-search-input')?.value || '')
+    })
+  })
+}
+document.getElementById('spt-history')?.addEventListener('click', () => {
+  renderHistory(document.getElementById('history-search-input')?.value || '')
+})
+document.getElementById('btn-clear-history')?.addEventListener('click', clearHistory)
+document.getElementById('history-search-input')?.addEventListener('input', e => renderHistory(e.target.value))
+
+// ═══════════════════════════════════════════════
+// FAVICON SUPPORT
+// ═══════════════════════════════════════════════
+function getFaviconUrl(url) {
+  try { return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=32` } catch { return '' }
+}
+
+// ═══════════════════════════════════════════════
+// FIND IN PAGE
+// ═══════════════════════════════════════════════
+const findBar = document.getElementById('find-bar')
+const findInput = document.getElementById('find-input')
+const findCount = document.getElementById('find-count')
+let findActive = false
+
+function openFind() {
+  const tab = tabs.find(t => t.id === activeTabId)
+  if (!tab?.wv) return
+  findBar.classList.remove('hidden')
+  findActive = true
+  findInput.focus()
+  findInput.select()
+}
+function closeFind() {
+  findBar.classList.add('hidden')
+  findActive = false
+  findInput.value = ''
+  findCount.textContent = ''
+  const tab = tabs.find(t => t.id === activeTabId)
+  if (tab?.wv) try { tab.wv.stopFindInPage('clearSelection') } catch {}
+}
+function doFind(forward = true) {
+  const tab = tabs.find(t => t.id === activeTabId)
+  if (!tab?.wv || !findInput.value) return
+  tab.wv.findInPage(findInput.value, { forward, findNext: true, matchCase: false })
+  tab.wv.addEventListener('found-in-page', e => {
+    findCount.textContent = e.result.activeMatchOrdinal + '/' + e.result.matches
+  }, { once: true })
+}
+
+findInput.addEventListener('input', () => {
+  const tab = tabs.find(t => t.id === activeTabId)
+  if (!tab?.wv) return
+  if (!findInput.value) { findCount.textContent = ''; try { tab.wv.stopFindInPage('clearSelection') } catch {}; return }
+  tab.wv.findInPage(findInput.value, { forward: true, matchCase: false })
+  tab.wv.addEventListener('found-in-page', e => {
+    findCount.textContent = e.result.matches > 0 ? e.result.activeMatchOrdinal + '/' + e.result.matches : 'Yok'
+  }, { once: true })
+})
+findInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.shiftKey ? doFind(false) : doFind(true) }
+  if (e.key === 'Escape') closeFind()
+})
+document.getElementById('find-prev').addEventListener('click', () => doFind(false))
+document.getElementById('find-next').addEventListener('click', () => doFind(true))
+document.getElementById('find-close').addEventListener('click', closeFind)
+
+// ═══════════════════════════════════════════════
+// CONTEXT MENU
+// ═══════════════════════════════════════════════
+const ctxMenu = document.getElementById('ctx-menu')
+let ctxData = {}   // webview'dan gelen bilgiler
+
+function showCtxMenu(x, y) {
+  ctxMenu.classList.remove('hidden')
+  requestAnimationFrame(() => {
+    const mw = ctxMenu.offsetWidth || 180
+    const mh = ctxMenu.offsetHeight || 220
+    const vw = window.innerWidth, vh = window.innerHeight
+    ctxMenu.style.left = Math.min(x, vw - mw - 8) + 'px'
+    ctxMenu.style.top  = Math.min(y, vh - mh - 8) + 'px'
+  })
+}
+function hideCtxMenu() { ctxMenu.classList.add('hidden'); ctxData = {} }
+
+function updateCtxMenuItems() {
+  const hasLink = !!ctxData.linkURL
+  const hasImg  = ctxData.mediaType === 'image' && !!ctxData.srcURL
+  const hasSel  = !!ctxData.selectionText
+
+  document.getElementById('ctx-open-link').style.display = hasLink ? '' : 'none'
+  document.getElementById('ctx-save-img').style.display  = hasImg  ? '' : 'none'
+  document.getElementById('ctx-open-img').style.display  = hasImg  ? '' : 'none'
+  document.getElementById('ctx-copy-sel').style.display  = hasSel  ? '' : 'none'
+  // media separator
+  document.querySelector('.ctx-sep-media').style.display = (hasLink || hasImg || hasSel) ? '' : 'none'
+}
+
+// Normal UI sağ tık (toolbar, tabbar, vs.)
+document.addEventListener('contextmenu', e => {
+  if (e.target.closest('webview')) return
+  e.preventDefault()
+  ctxData = {}
+  updateCtxMenuItems()
+  showCtxMenu(e.clientX, e.clientY)
+})
+
+// Webview içinden gelen context-menu (main.js → IPC)
+api.on('webview-context-menu', (params) => {
+  ctxData = params
+  updateCtxMenuItems()
+  showCtxMenu(params.x, params.y)
+})
+
+document.addEventListener('click', e => {
+  if (!ctxMenu.classList.contains('hidden') && !ctxMenu.contains(e.target)) hideCtxMenu()
+})
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideCtxMenu() }, true)
+
+// — Buton aksiyonları —
+document.getElementById('ctx-back').addEventListener('click', () => { hideCtxMenu(); document.getElementById('btn-back').click() })
+document.getElementById('ctx-fwd').addEventListener('click',  () => { hideCtxMenu(); document.getElementById('btn-fwd').click() })
+document.getElementById('ctx-reload').addEventListener('click',() => { hideCtxMenu(); document.getElementById('btn-reload').click() })
+
+document.getElementById('ctx-open-link').addEventListener('click', () => {
+  const url = ctxData.linkURL; hideCtxMenu()
+  if (url) createTab({ url })
+})
+document.getElementById('ctx-save-img').addEventListener('click', () => {
+  const src = ctxData.srcURL; hideCtxMenu()
+  if (src) api.invoke('download-image', src).catch(()=>{})
+})
+document.getElementById('ctx-open-img').addEventListener('click', () => {
+  const src = ctxData.srcURL; hideCtxMenu()
+  if (src) createTab({ url: src })
+})
+document.getElementById('ctx-copy-sel').addEventListener('click', () => {
+  const sel = ctxData.selectionText; hideCtxMenu()
+  if (sel) { navigator.clipboard.writeText(sel).catch(()=>{}); notify('📋 Kopyalandı') }
+})
+document.getElementById('ctx-copy-url').addEventListener('click', () => {
+  hideCtxMenu()
+  const tab = tabs.find(t => t.id === activeTabId)
+  const url = ctxData.pageURL || tab?.url || ''
+  if (url) { navigator.clipboard.writeText(url).catch(()=>{}); notify('📋 URL kopyalandı') }
+})
+document.getElementById('ctx-new-tab').addEventListener('click', () => { hideCtxMenu(); createTab() })
+document.getElementById('ctx-find').addEventListener('click', () => { hideCtxMenu(); openFind() })
+document.getElementById('ctx-screenshot').addEventListener('click', () => { hideCtxMenu(); document.getElementById('btn-ss').click() })
+document.getElementById('ctx-bookmark').addEventListener('click', () => { hideCtxMenu(); document.getElementById('btn-bookmark').click() })
+
+// ═══════════════════════════════════════════════
+// ZOOM
+// ═══════════════════════════════════════════════
+let currentZoom = 1.0
+function setZoom(factor) {
+  const tab = tabs.find(t => t.id === activeTabId)
+  currentZoom = Math.max(0.25, Math.min(5.0, factor))
+  const pct = Math.round(currentZoom * 100)
+  document.getElementById('zoom-display').textContent = pct + '%'
+  if (tab?.wv) try { tab.wv.setZoomFactor(currentZoom) } catch {}
+  if (tab) tab.zoom = currentZoom
+}
+document.getElementById('btn-zoom-in').addEventListener('click',  () => setZoom(currentZoom + 0.1))
+document.getElementById('btn-zoom-out').addEventListener('click', () => setZoom(currentZoom - 0.1))
+document.getElementById('zoom-display').addEventListener('click', () => setZoom(1.0))
+
+// Sekme değişince zoom geri yükle
+const _origSwitchTabForZoom = switchTab
+// zoom'u switchTab'a entegre et — tab.zoom varsa onu kullan
+function applyZoomToTab(id) {
+  const tab = tabs.find(t => t.id === id)
+  const z = tab?.zoom || 1.0
+  currentZoom = z
+  document.getElementById('zoom-display').textContent = Math.round(z * 100) + '%'
+  if (tab?.wv && tab.url) try { tab.wv.setZoomFactor(z) } catch {}
+}
+
+// ═══════════════════════════════════════════════
+// PROGRESS BAR
+// ═══════════════════════════════════════════════
+const progressBar = document.getElementById('load-progress-bar')
+let progressTimer = null
+function startProgress() {
+  clearTimeout(progressTimer)
+  progressBar.style.transition = 'none'
+  progressBar.style.width = '0%'
+  progressBar.classList.add('loading')
+  requestAnimationFrame(() => {
+    progressBar.style.transition = 'width 8s cubic-bezier(0.1,0.05,0,1)'
+    progressBar.style.width = '85%'
+  })
+}
+function finishProgress() {
+  clearTimeout(progressTimer)
+  progressBar.style.transition = 'width .2s ease'
+  progressBar.style.width = '100%'
+  progressTimer = setTimeout(() => {
+    progressBar.style.transition = 'opacity .4s'
+    progressBar.classList.remove('loading')
+    progressBar.style.width = '0%'
+  }, 400)
+}
+
+// ═══════════════════════════════════════════════
+// TAB TOOLTIP
+// ═══════════════════════════════════════════════
+const tabTooltip = document.getElementById('tab-tooltip')
+let tooltipTimer = null
+document.getElementById('tab-scroll').addEventListener('mouseover', e => {
+  const tabEl = e.target.closest('.tab')
+  if (!tabEl) return
+  const tab = tabs.find(t => t.id === tabEl.dataset.id)
+  if (!tab) return
+  clearTimeout(tooltipTimer)
+  tooltipTimer = setTimeout(() => {
+    tabTooltip.textContent = tab.title + (tab.url ? '\n' + tab.url : '')
+    tabTooltip.classList.remove('hidden')
+    const r = tabEl.getBoundingClientRect()
+    tabTooltip.style.left = r.left + 'px'
+    tabTooltip.style.top  = (r.bottom + 4) + 'px'
+  }, 500)
+})
+document.getElementById('tab-scroll').addEventListener('mouseout', () => {
+  clearTimeout(tooltipTimer)
+  tabTooltip.classList.add('hidden')
+})
+
+// ═══════════════════════════════════════════════
+// HELP OVERLAY
+// ═══════════════════════════════════════════════
+const helpOverlay = document.getElementById('help-overlay')
+document.getElementById('help-close').addEventListener('click', () => helpOverlay.classList.add('hidden'))
+helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden') })
+
+// ═══════════════════════════════════════════════
+// YOUTUBE / WEBVIEW FULLSCREEN
+// ═══════════════════════════════════════════════
+// main.js'den enter-fullscreen / leave-fullscreen IPC gelecek
+api.on('wv-enter-fullscreen', () => {
+  document.body.classList.add('wv-fullscreen')
+})
+api.on('wv-leave-fullscreen', () => {
+  document.body.classList.remove('wv-fullscreen')
+})
+
+// ═══════════════════════════════════════════════
+// TAB MUTE / SES KONTROLÜ
+// ═══════════════════════════════════════════════
+function toggleMute(id) {
+  const tab = tabs.find(t => t.id === id)
+  if (!tab?.wv) return
+  tab.muted = !tab.muted
+  try { tab.wv.setAudioMuted(tab.muted) } catch {}
+  renderTabBar()
+  notify(tab.muted ? '🔇 Sekme susturuldu' : '🔊 Ses açıldı')
+}
+// main.js'den audible state değişince bildirim gelir
+api.on('wv-audio-changed', ({ wcId, audible }) => {
+  // webContents id'si ile eşleşen tab'ı bul
+  tabs.forEach(t => {
+    if (!t.wv) return
+    try {
+      // getWebContentsId() Electron webview tag API'si
+      if (t.wv.getWebContentsId && t.wv.getWebContentsId() === wcId) {
+        t.audible = audible
+        renderTabBar()
+      }
+    } catch {}
+  })
+})
+
+// ═══════════════════════════════════════════════
+// SON KAPATILAN SEKMELERİ GERİ AÇ (Ctrl+Shift+T)
+// ═══════════════════════════════════════════════
+function reopenLastTab() {
+  if (!closedTabs.length) { notify('Geri açılacak sekme yok'); return }
+  const last = closedTabs.pop()
+  const id = createTab({ url: last.url })
+  const t2 = tabs.find(t => t.id === id)
+  if (t2) t2.zoom = last.zoom
+}
+
+// ═══════════════════════════════════════════════
+// HIZLI ERİŞİM (Başlangıç sayfası özelleştirme)
+// ═══════════════════════════════════════════════
+const DEFAULT_QA = [
+  { label:'YouTube',    url:'https://youtube.com',    favicon:'https://www.google.com/s2/favicons?domain=youtube.com&sz=48' },
+  { label:'Google',     url:'https://google.com',     favicon:'https://www.google.com/s2/favicons?domain=google.com&sz=48' },
+  { label:'GitHub',     url:'https://github.com',     favicon:'https://www.google.com/s2/favicons?domain=github.com&sz=48' },
+  { label:'DuckDuckGo', url:'https://duckduckgo.com', favicon:'https://www.google.com/s2/favicons?domain=duckduckgo.com&sz=48' },
+]
+function getQA() {
+  try { return JSON.parse(localStorage.getItem('miau_qa') || 'null') || DEFAULT_QA } catch { return DEFAULT_QA }
+}
+function saveQA(list) { localStorage.setItem('miau_qa', JSON.stringify(list)) }
+
+function renderQuickAccess() {
+  const list = getQA()
+  const items = list.map((item, i) => `
+    <div class="qa-item" data-qa-url="${escHtml(item.url)}" data-qa-idx="${i}" title="${escHtml(item.url)}">
+      <img class="qa-favicon" src="${escHtml(item.favicon)}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22/>'">
+      <span class="qa-label">${escHtml(item.label)}</span>
+    </div>`).join('')
+  const addBtn = list.length < 8
+    ? `<div class="qa-item qa-add" id="qa-add-btn" title="Site Ekle"><span class="qa-add-icon">＋</span><span class="qa-label">Ekle</span></div>`
+    : ''
+  return items + addBtn
+}
+
+function bindQuickAccess(page) {
+  page.querySelectorAll('.qa-item[data-qa-url]').forEach(el => {
+    el.addEventListener('click', () => navigate(activeTabId, el.dataset.qaUrl))
+    el.addEventListener('contextmenu', e => {
+      e.preventDefault(); e.stopPropagation()
+      const idx = parseInt(el.dataset.qaIdx)
+      if (confirm('Bu kısayolu kaldır?')) {
+        const list = getQA(); list.splice(idx, 1); saveQA(list)
+        const grid = page.querySelector('#qa-grid')
+        if (grid) grid.innerHTML = renderQuickAccess(); bindQuickAccess(page)
+      }
+    })
+  })
+  const addBtn = page.querySelector('#qa-add-btn')
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      const url   = prompt('Site adresi (örn: https://twitter.com):')
+      if (!url || !url.startsWith('http')) return
+      const label = prompt('Kısa isim:') || new URL(url).hostname.replace('www.','')
+      const list  = getQA()
+      list.push({ label, url, favicon: getFaviconUrl(url) })
+      saveQA(list)
+      const grid = page.querySelector('#qa-grid')
+      if (grid) grid.innerHTML = renderQuickAccess(); bindQuickAccess(page)
+    })
+  }
+}
+
+// ═══════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  const ctrl = e.ctrlKey || e.metaKey
+  if (ctrl && e.key === 't')  { e.preventDefault(); createTab(); return }
+  if (ctrl && e.key === 'w')  { e.preventDefault(); closeTab(activeTabId); return }
+  if (ctrl && e.shiftKey && (e.key === 'T' || e.key === 't')) { e.preventDefault(); reopenLastTab(); return }
+  if (ctrl && e.shiftKey && e.key === 'P') { e.preventDefault(); api.send('open-private-tab'); return }
+  if (ctrl && e.key === 'm')  { e.preventDefault(); toggleMute(activeTabId); return }
+  if (e.key === 'F5')         { e.preventDefault(); document.getElementById('btn-reload').click(); return }
+  if (ctrl && e.key === 'l')  { e.preventDefault(); document.getElementById('url-bar').focus(); return }
+  if (ctrl && e.key === 'f')  { e.preventDefault(); openFind(); return }
+  if (ctrl && e.key === 'h')  { e.preventDefault(); document.getElementById('btn-settings-tb').click(); setTimeout(()=>document.getElementById('spt-history')?.click(),120); return }
+  if (ctrl && (e.key === '=' || e.key === '+')) { e.preventDefault(); setZoom(currentZoom + 0.1); return }
+  if (ctrl && e.key === '-') { e.preventDefault(); setZoom(currentZoom - 0.1); return }
+  if (ctrl && e.key === '0') { e.preventDefault(); setZoom(1.0); return }
+  if (ctrl && e.key === '?') { e.preventDefault(); helpOverlay.classList.toggle('hidden'); return }
+  if (ctrl && e.key === 'r')  { e.preventDefault(); document.getElementById('btn-reload').click(); return }
+  if (e.key === 'F11')        { e.preventDefault(); api.send('toggle-fullscreen'); return }
+  if (e.altKey && e.key === 'ArrowLeft')  { e.preventDefault(); document.getElementById('btn-back').click(); return }
+  if (e.altKey && e.key === 'ArrowRight') { e.preventDefault(); document.getElementById('btn-fwd').click(); return }
+  if (ctrl && e.key >= '1' && e.key <= '9') {
+    const idx = parseInt(e.key) - 1
+    if (tabs[idx]) { e.preventDefault(); switchTab(tabs[idx].id) }
+  }
+})
+
+// ═══════════════════════════════════════════════
+// DOWNLOAD BAR
+// ═══════════════════════════════════════════════
+const dlBar = document.getElementById('dl-bar')
+const dlItems = new Map()
+function addDlItem({ id, filename }) {
+  dlBar.classList.remove('hidden')
+  const el = document.createElement('div'); el.className = 'dl-item'; el.id = 'dl-' + id
+  el.innerHTML = `<span class="dl-name">📥 ${escHtml(filename)}</span><span class="dl-prog">0%</span>`
+  dlBar.appendChild(el); dlItems.set(id, el)
+}
+function updateDlItem({ id, received, total }) {
+  const el = dlItems.get(id); if (!el) return
+  el.querySelector('.dl-prog').textContent = (total ? Math.round(received/total*100) : '…') + '%'
+}
+function finishDlItem({ id, state }) {
+  const el = dlItems.get(id); if (!el) return
+  el.querySelector('.dl-prog').textContent = state === 'completed' ? '✓' : '✕'
+  el.style.borderColor = state === 'completed' ? 'var(--accent)' : 'var(--red)'
+  setTimeout(() => { el.remove(); dlItems.delete(id); if (!dlBar.children.length) dlBar.classList.add('hidden') }, 3000)
+}
+
+// ═══════════════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════════════
+function notify(msg, dur=3000) {
+  const nb = document.getElementById('notif-bar')
+  const el = document.createElement('div'); el.className = 'notif'; el.textContent = msg
+  nb.appendChild(el); requestAnimationFrame(() => el.classList.add('show'))
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350) }, dur)
+}
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+// ═══════════════════════════════════════════════
+// RESIZE OBSERVER — debounce ile, her pixel'de tetiklenmesin
+// ═══════════════════════════════════════════════
+let _resizeTimer = null
+const _resizeObs = new ResizeObserver(() => {
+  clearTimeout(_resizeTimer)
+  _resizeTimer = setTimeout(() => {
+    const tab = tabs.find(t2 => t2.id === activeTabId)
+    if (!tab?.url) {
+      const page = document.getElementById('page-' + activeTabId)
+      const theme = document.body.getAttribute('data-theme') || 'green'
+      if (CUTE_THEMES.has(theme)) {
+        stopPetalAnim()
+        const cv = page?.querySelector('.petal-canvas')
+        if (cv) startPetalAnim(cv, theme)
+      } else {
+        stopMatrix()
+        const cv = page?.querySelector('.matrix-canvas')
+        if (cv) startMatrix(cv)
+      }
+    }
+  }, 200)
+})
+_resizeObs.observe(document.getElementById('viewport'))
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+;(async () => {
+  const savedTheme = localStorage.getItem('miau_theme') || 'green'
+  document.body.setAttribute('data-theme', savedTheme)
+  styleThemeBtns()
+  applyLang(currentLang)
+  updateAnimeGirl(savedTheme)
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeSet === savedTheme))
+  const saved = await api.invoke('load-session')
+  if (saved?.length) saved.forEach(t2 => createTab({ url: t2.url }))
+  else createTab()
+})()
+
+setInterval(async () => {
+  try { const ab = await api.invoke('get-adblock-state'); } catch {}
+}, 10000)
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "name": "miau-browser",
+  "version": "5.0.0",
+  "description": "MIAU Browser by leopanoriginal — Secure Edition",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.miau.browser",
+    "productName": "MIAU Browser",
+    "asar": true,
+    "asarUnpack": ["yt-dlp.exe", "yt-dlp"],
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": false,
+      "shortcutName": "MIAU Browser",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "installerHeaderIcon": "icon.ico",
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "leopanoriginal",
+      "repo": "miau-browser"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "preload-incognito.js",
+      "index.html",
+      "incognito.html",
+      "shared.js",
+      "icon.ico",
+      "icon.png"
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.4"
+  },
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "license": "ISC"
+}

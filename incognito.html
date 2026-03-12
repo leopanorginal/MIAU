@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self';">
+<title>MIAU — Incognito / גלישה פרטית</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#05000f;--bg2:#0a0020;--panel:#0d0025;--panel2:#110030;--border:#2a0055;--accent:#cc00ff;--accent2:#9900cc;--accent3:#1a0033;--dim:#330055;--muted:#550088;--red:#ff0040;--matrix:#cc00ff;}
+html,body{height:100%;background:var(--bg);color:var(--accent);font-family:'Share Tech Mono',monospace;overflow:hidden;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;background:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 1px,transparent 1px,transparent 3px);animation:scanmove 8s linear infinite;}
+@keyframes scanmove{0%{background-position:0 0;}100%{background-position:0 100px;}}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9997;background:radial-gradient(ellipse at 20% 50%,rgba(100,0,180,.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(150,0,255,.08) 0%,transparent 50%);animation:flicker 6s ease-in-out infinite;}
+@keyframes flicker{0%,100%{opacity:1;}50%{opacity:.97;}}
+#shell{display:flex;flex-direction:column;height:100vh;width:100vw;}
+#titlebar{display:flex;align-items:center;gap:10px;background:var(--bg);height:36px;border-bottom:1px solid var(--border);padding:0 14px;flex-shrink:0;-webkit-app-region:drag;position:relative;overflow:hidden;}
+#titlebar::after{content:'';position:absolute;bottom:0;left:-60%;width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:titlescan 3s linear infinite;}
+@keyframes titlescan{0%{left:-60%;}100%{left:100%;}}
+.t-logo{font-family:'Orbitron',monospace;font-size:13px;font-weight:900;color:var(--accent);letter-spacing:5px;text-shadow:0 0 12px var(--accent),0 0 24px var(--accent2);animation:logoglitch 8s ease-in-out infinite;}
+@keyframes logoglitch{0%,95%,100%{transform:none;}96%{transform:translateX(2px);text-shadow:-2px 0 #ff0040,2px 0 #00ffff;}97%{transform:translateX(-2px);}98%{transform:none;}}
+.t-mid{flex:1;display:flex;align-items:center;justify-content:center;gap:12px;-webkit-app-region:drag;}
+.t-badge{font-size:10px;color:var(--accent);border:1px solid var(--border);border-radius:3px;padding:2px 10px;letter-spacing:3px;text-shadow:0 0 8px var(--accent);animation:badgepulse 2s ease-in-out infinite;}
+@keyframes badgepulse{0%,100%{border-color:var(--border);}50%{border-color:var(--accent);box-shadow:0 0 10px rgba(204,0,255,.3);}}
+.t-status{font-size:10px;color:var(--muted);letter-spacing:2px;}
+.win-ctrls{display:flex;gap:3px;-webkit-app-region:no-drag;}
+.wb{width:26px;height:26px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.wb:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 8px rgba(204,0,255,.3);}
+.wb.danger:hover{border-color:var(--red);color:var(--red);}
+#tabbar{display:flex;align-items:flex-end;background:var(--bg);padding:5px 8px 0;gap:2px;min-height:36px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;border-bottom:1px solid var(--border);}
+#tabbar::-webkit-scrollbar{display:none;}
+.tab{display:flex;align-items:center;gap:6px;height:28px;padding:0 9px;background:var(--panel);border:1px solid var(--border);border-bottom:none;border-radius:4px 4px 0 0;cursor:pointer;min-width:100px;max-width:180px;font-size:11px;color:var(--muted);transition:all .15s;position:relative;flex-shrink:0;-webkit-app-region:no-drag;}
+.tab:hover{border-color:var(--accent2);color:var(--accent2);}
+.tab.active{background:var(--bg2);color:var(--accent);border-color:var(--accent2);text-shadow:0 0 8px var(--accent);}
+.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--bg2);}
+.tab.loading::before{content:'';position:absolute;bottom:0;left:0;height:2px;background:var(--accent);animation:tabload 1.5s ease-in-out infinite;}
+@keyframes tabload{0%{width:0;left:0;}50%{width:60%;left:20%;}100%{width:0;left:100%;}}
+.tab-title{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tab-x{width:13px;height:13px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--muted);flex-shrink:0;transition:all .12s;}
+.tab-x:hover{background:var(--red);color:#fff;}
+.tab-btns{display:flex;gap:2px;align-items:flex-end;-webkit-app-region:no-drag;}
+.nt-btn{height:28px;padding:0 10px;display:flex;align-items:center;gap:5px;background:transparent;border:1px solid var(--border);border-bottom:none;border-radius:4px 4px 0 0;cursor:pointer;font-size:10px;color:var(--muted);transition:all .15s;white-space:nowrap;}
+.nt-btn:hover{color:var(--accent);border-color:var(--accent);}
+#toolbar{display:flex;align-items:center;gap:5px;background:var(--panel);border-bottom:1px solid var(--border);padding:0 10px;height:46px;flex-shrink:0;-webkit-app-region:no-drag;}
+.nb{width:28px;height:28px;border-radius:4px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.nb:hover:not([disabled]){color:var(--accent);border-color:var(--accent);box-shadow:0 0 8px rgba(204,0,255,.2);}
+.nb[disabled]{opacity:.2;cursor:default;}
+.nb.spinning{animation:spin .6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#addr-wrap{flex:1;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:0 10px;height:30px;transition:all .2s;min-width:0;position:relative;}
+#addr-wrap:focus-within{border-color:var(--accent2);box-shadow:0 0 12px rgba(157,0,255,.15);}
+#page-progress{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);width:0%;transition:width .3s;border-radius:1px;box-shadow:0 0 6px var(--accent);}
+.addr-pre{font-size:11px;color:var(--muted);flex-shrink:0;}
+#addr-input{flex:1;background:transparent;border:none;outline:none;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:12px;caret-color:var(--accent);min-width:0;}
+#addr-input::placeholder{color:var(--dim);}
+#go-btn{background:transparent;border:1px solid var(--accent2);border-radius:3px;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:11px;padding:2px 10px;cursor:pointer;flex-shrink:0;transition:all .15s;letter-spacing:1px;}
+#go-btn:hover{background:var(--accent);color:#000;box-shadow:0 0 10px var(--accent);}
+#findbar{display:none;align-items:center;gap:8px;background:var(--panel2);border-bottom:1px solid var(--border);padding:6px 12px;flex-shrink:0;}
+#findbar.show{display:flex;animation:slidedown .2s ease;}
+@keyframes slidedown{from{transform:translateY(-8px);opacity:0;}to{transform:none;opacity:1;}}
+#find-input{background:var(--bg);border:1px solid var(--border);border-radius:3px;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:12px;padding:4px 10px;outline:none;width:220px;transition:all .2s;}
+#find-input:focus{border-color:var(--accent2);}
+#find-info{font-size:11px;color:var(--muted);min-width:60px;}
+.find-btn{background:transparent;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-size:12px;padding:3px 8px;cursor:pointer;transition:all .15s;}
+.find-btn:hover{border-color:var(--accent);color:var(--accent);}
+.find-close{margin-left:auto;background:transparent;border:none;color:var(--muted);font-size:14px;cursor:pointer;}
+.find-close:hover{color:var(--red);}
+#dl-toast{position:fixed;bottom:60px;right:16px;width:260px;z-index:400;display:flex;flex-direction:column;gap:4px;}
+.dl-item{padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--panel);animation:fadeup .2s ease;}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.dl-name{font-size:11px;color:var(--accent2);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dl-bar{height:3px;background:var(--border);border-radius:2px;margin-bottom:4px;}
+.dl-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:2px;transition:width .3s;box-shadow:0 0 6px var(--accent);}
+.dl-info{font-size:10px;color:var(--muted);}
+.dl-done{color:var(--accent);}
+#viewport{flex:1;position:relative;background:var(--bg);overflow:hidden;min-height:0;}
+.tab-frame{position:absolute;inset:0;display:none;flex-direction:column;}
+.tab-frame.active{display:flex;}
+.home-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:36px 24px;overflow-y:auto;position:relative;}
+canvas#matrix{position:absolute;inset:0;pointer-events:none;}
+.ghost-eye{font-size:44px;animation:eyeblink 4s ease-in-out infinite;position:relative;z-index:1;filter:drop-shadow(0 0 12px var(--accent));}
+@keyframes eyeblink{0%,88%,100%{opacity:1;transform:scaleY(1);}92%{opacity:0;transform:scaleY(.1);}96%{opacity:1;transform:scaleY(1);}}
+.ghost-logo{font-family:'Orbitron',monospace;font-size:48px;font-weight:900;color:var(--accent);letter-spacing:10px;animation:ghostpulse 2.5s ease-in-out infinite;position:relative;z-index:1;}
+@keyframes ghostpulse{0%,100%{text-shadow:0 0 20px var(--accent),0 0 50px var(--accent2);}50%{text-shadow:0 0 35px var(--accent),0 0 80px var(--accent2),0 0 120px #6600cc;}}
+.ghost-sub{font-size:11px;letter-spacing:4px;color:var(--muted);position:relative;z-index:1;}
+.ghost-sub span{animation:blink 1.2s step-end infinite;color:var(--accent);}
+.ghost-sub-he{font-size:12px;color:var(--accent2);position:relative;z-index:1;direction:rtl;letter-spacing:2px;text-shadow:0 0 8px var(--accent2);}
+@keyframes blink{50%{opacity:0;}}
+.warn-box{background:rgba(80,0,120,.12);border:1px solid var(--border);border-radius:8px;padding:16px 20px;max-width:480px;text-align:center;position:relative;z-index:1;box-shadow:0 0 30px rgba(157,0,255,.08);}
+.warn-title{color:var(--accent);font-size:11px;letter-spacing:3px;margin-bottom:8px;text-shadow:0 0 8px var(--accent);}
+.warn-text{font-size:11px;color:var(--muted);line-height:2;letter-spacing:1px;}
+.warn-text span{color:#9900cc;}
+.warn-text-he{font-size:11px;color:var(--muted);direction:rtl;line-height:2;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.home-search{display:flex;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:6px;width:100%;max-width:520px;overflow:hidden;position:relative;z-index:1;transition:all .2s;}
+.home-search:focus-within{border-color:var(--accent2);box-shadow:0 0 20px rgba(157,0,255,.15);}
+.hs-icon{padding:0 14px;font-size:15px;color:var(--muted);}
+#home-search-input{flex:1;background:transparent;border:none;outline:none;color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:13px;padding:12px 0;caret-color:var(--accent);}
+#home-search-input::placeholder{color:var(--dim);}
+.hs-btn{padding:0 16px;height:100%;background:rgba(80,0,120,.3);border:none;border-left:1px solid var(--border);color:var(--accent);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s;letter-spacing:1px;}
+.hs-btn:hover{background:var(--accent);color:#000;}
+.credit{font-size:12px;color:var(--accent2);letter-spacing:3px;position:relative;z-index:1;opacity:.85;}
+.credit span{color:var(--accent2);font-style:italic;}
+.page-webview{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+#notif{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--accent2);border-radius:6px;padding:8px 20px;font-size:12px;color:var(--accent);z-index:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;box-shadow:0 0 20px rgba(157,0,255,.2);}
+#notif.show{opacity:1;transform:translateX(-50%) translateY(-4px);}
+#zoom-ind{position:fixed;bottom:24px;right:24px;background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-size:12px;color:var(--accent);z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;}
+#zoom-ind.show{opacity:1;}
+#fs-hint{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:5px 14px;font-size:11px;color:var(--muted);z-index:600;opacity:0;transition:opacity .3s;pointer-events:none;}
+#fs-hint.show{opacity:1;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+<div id="shell">
+  <div id="titlebar">
+    <div class="t-logo">👁 MIAU</div>
+    <div class="t-mid">
+      <div class="t-badge">INCOGNITO / פרטי</div>
+      <div class="t-status" id="tstatus">■</div>
+    </div>
+    <div class="win-ctrls">
+      <div class="wb" id="inc-min">_</div>
+      <div class="wb" id="inc-max">□</div>
+      <div class="wb" id="inc-fs">⛶</div>
+      <div class="wb danger" id="inc-cls">✕</div>
+    </div>
+  </div>
+  <div id="tabbar"><div class="tab-btns"><div class="nt-btn" id="btn-new-tab-inc">+ INCOGNITO TAB / לשונית פרטית</div></div></div>
+  <div id="toolbar">
+    <div class="nb" id="btn-back">←</div>
+    <div class="nb" id="btn-fwd">→</div>
+    <div class="nb" id="btn-reload">↺</div>
+    <div class="nb" id="btn-home-inc">⌂</div>
+    <div id="addr-wrap">
+      <div id="page-progress"></div>
+      <span class="addr-pre">👁//</span>
+      <input id="addr-input" type="text" placeholder="" autocomplete="off" spellcheck="false"/>
+      <div id="go-btn">[GO / לך]</div>
+    </div>
+    <div class="nb" id="btn-zoom-out-inc">－</div>
+    <div class="nb" id="zoom-label" style="font-size:10px;color:var(--muted);border:none;width:36px;cursor:default;">100%</div>
+    <div class="nb" id="btn-zoom-in-inc">＋</div>
+    <div class="nb" id="btn-find-inc">⌕</div>
+  </div>
+  <div id="findbar">
+    <span style="font-size:11px;color:var(--muted);">⌕ SEARCH / חיפוש:</span>
+    <input id="find-input" type="text" placeholder="Search in page… / חפש בדף" autocomplete="off"/>
+    <span id="find-info"></span>
+    <div class="find-btn" id="find-next-inc">▼</div>
+    <div class="find-btn" id="find-prev-inc">▲</div>
+    <div class="find-close" id="find-close-inc">✕</div>
+  </div>
+  <div id="viewport"></div>
+</div>
+<div id="dl-toast"></div>
+<div id="notif"></div>
+<div id="zoom-ind"></div>
+<div id="fs-hint">F11 — EXIT FULLSCREEN / יציאה ממסך מלא</div>
+
+<script src="shared.js"></script>
+<script>
+const eAPI = window.electronAPI
+
+let tabs = [], activeId = null, zoom = 100
+
+eAPI.on('download-started', d => {
+  const toast = document.getElementById('dl-toast')
+  const el = document.createElement('div'); el.className = 'dl-item'; el.id = 'dl-' + d.id
+  const nm = document.createElement('div'); nm.className = 'dl-name'; nm.textContent = d.filename
+  const bar = document.createElement('div'); bar.className = 'dl-bar'
+  const fill = document.createElement('div'); fill.className = 'dl-bar-fill'; fill.id = 'dlf-' + d.id; fill.style.width = '0%'
+  bar.appendChild(fill)
+  const info = document.createElement('div'); info.className = 'dl-info'; info.id = 'dli-' + d.id; info.textContent = '0%'
+  el.appendChild(nm); el.appendChild(bar); el.appendChild(info)
+  toast.appendChild(el)
+})
+eAPI.on('download-progress', d => {
+  const p = d.total ? Math.round(d.received / d.total * 100) : 0
+  const f = document.getElementById('dlf-' + d.id); if (f) f.style.width = p + '%'
+  const i = document.getElementById('dli-' + d.id); if (i) i.textContent = p + '%'
+})
+eAPI.on('download-done', d => {
+  const i = document.getElementById('dli-' + d.id)
+  if (i) { const s = document.createElement('span'); s.className = 'dl-done'; s.textContent = '✓ Downloaded / הורד'; i.innerHTML = ''; i.appendChild(s) }
+  notify('✓ ' + String(d.filename).slice(0, 40))
+  setTimeout(() => { const el = document.getElementById('dl-' + d.id); if (el) el.remove() }, 4000)
+})
+eAPI.on('fullscreen-changed', fs => {
+  const h = document.getElementById('fs-hint')
+  h.classList.toggle('show', fs)
+  if (fs) setTimeout(() => h.classList.remove('show'), 2500)
+  setTimeout(() => { const t = getTab(activeId); if (!t || t.url) return; const f = document.getElementById('frame-' + activeId); if (f) initMatrix(f) }, 100)
+})
+
+function toggleFullscreen() { eAPI.send('inc-fullscreen') }
+setInterval(() => { const el = document.getElementById('tstatus'); if (el) el.textContent = 'INCOGNITO ■ / פרטי ' + new Date().toTimeString().split(' ')[0] }, 1000)
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'F11') { e.preventDefault(); toggleFullscreen() }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'f') { e.preventDefault(); toggleFind() }
+  if ((e.ctrlKey || e.metaKey) && e.key === '=') { e.preventDefault(); toggleZoom(1) }
+  if ((e.ctrlKey || e.metaKey) && e.key === '-') { e.preventDefault(); toggleZoom(-1) }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'r') { e.preventDefault(); navReload() }
+  if (e.key === 'Escape') closeFind()
+})
+
+function toggleZoom(d) { setZoom(Math.min(150, Math.max(70, zoom + d * 10))) }
+function setZoom(z) {
+  zoom = z; document.getElementById('zoom-label').textContent = z + '%'
+  const wv = getWebview(); if (wv) wv.setZoomFactor(z / 100)
+  const ind = document.getElementById('zoom-ind'); ind.textContent = z + '%'; ind.classList.add('show')
+  clearTimeout(ind._t); ind._t = setTimeout(() => ind.classList.remove('show'), 1200)
+}
+let _progressTimeout = null
+function setProgress(pct) {
+  const el = document.getElementById('page-progress'); if (!el) return
+  el.style.width = pct + '%'
+  if (pct >= 100) {
+    if (_progressTimeout) clearTimeout(_progressTimeout)
+    _progressTimeout = setTimeout(() => { const e2 = document.getElementById('page-progress'); if (e2) e2.style.width = '0%'; _progressTimeout = null }, 600)
+  }
+}
+function toggleFind() { const fb = document.getElementById('findbar'); if (fb.classList.contains('show')) { closeFind(); return } fb.classList.add('show'); document.getElementById('find-input').focus() }
+function closeFind() { document.getElementById('findbar').classList.remove('show'); const wv = getWebview(); if (wv) wv.stopFindInPage('clearSelection') }
+function doFind() { const q = document.getElementById('find-input').value; const wv = getWebview(); if (!wv || !q) return; wv.findInPage(q); wv.addEventListener('found-in-page', e => { document.getElementById('find-info').textContent = `${e.result.activeMatchOrdinal}/${e.result.matches}` }, { once: true }) }
+function findNext() { doFind() }
+function findPrev() { const q = document.getElementById('find-input').value; const wv = getWebview(); if (!wv || !q) return; wv.findInPage(q, { forward: false }) }
+document.getElementById('find-input').addEventListener('keydown', e => { if (e.key === 'Enter') doFind(); if (e.key === 'Escape') closeFind() })
+function newTab(u = null) {
+  if (u && !isSafeUrl(u)) return
+  const id = Date.now() + Math.random()
+  tabs.push({ id, title: 'INCOGNITO / פרטי', icon: '👁', url: u })
+  renderTabBar(); activateTab(id)
+  if (u) loadUrl(id, u)
+  return id
+}
+function activateTab(id) { activeId = id; renderTabBar(); renderViewport(); const t = getTab(id); document.getElementById('addr-input').value = t?.url || ''; updateNavBtns(); setZoom(zoom) }
+function closeTab(id, e) {
+  e && e.stopPropagation()
+  const wv = document.getElementById('wv-' + id)
+  if (wv) {
+    const WV_EVENTS = ['did-start-loading','did-stop-loading','page-title-updated','did-navigate','did-navigate-in-page','new-window','did-finish-load','found-in-page']
+    WV_EVENTS.forEach(ev => { try { wv.removeEventListener(ev, null) } catch {} })
+    try { wv.stop() } catch {}
+    wv.remove()
+  }
+  const frame = document.getElementById('frame-' + id)
+  if (frame) {
+    if (frame._mat) cancelAnimationFrame(frame._mat)
+    if (frame._bi) clearInterval(frame._bi)
+    frame.remove()
+  }
+  const i = tabs.findIndex(t => t.id === id); tabs.splice(i, 1)
+  if (!tabs.length) { newTab(); return }
+  if (activeId === id) activateTab(tabs[Math.min(i, tabs.length - 1)].id)
+  else renderTabBar()
+}
+function getTab(id) { return tabs.find(t => t.id === id) }
+let dragId = null
+function renderTabBar() {
+  const bar = document.getElementById('tabbar')
+  Array.from(bar.children).forEach(el => { if (!el.classList.contains('tab-btns')) el.remove() })
+  const btns = bar.querySelector('.tab-btns')
+  tabs.forEach(t => {
+    const el = document.createElement('div'); el.className = 'tab' + (t.id === activeId ? ' active' : ''); el.draggable = true
+    const icon = document.createElement('span'); icon.textContent = t.icon; icon.style.fontSize = '11px'; icon.style.flexShrink = '0'
+    const title = document.createElement('span'); title.className = 'tab-title'; title.textContent = t.title
+    const x = document.createElement('span'); x.className = 'tab-x'; x.textContent = '✕'; x.onclick = ev => closeTab(t.id, ev)
+    el.appendChild(icon); el.appendChild(title); el.appendChild(x)
+    el.addEventListener('click', () => activateTab(t.id))
+    el.addEventListener('dragstart', () => dragId = t.id)
+    el.addEventListener('dragover', e => { e.preventDefault(); el.style.opacity = '.6' })
+    el.addEventListener('dragleave', () => el.style.opacity = '')
+    el.addEventListener('drop', e => { e.preventDefault(); el.style.opacity = ''; const fi = tabs.findIndex(x => x.id === dragId), ti = tabs.findIndex(x => x.id === t.id); if (fi !== ti) { const [m] = tabs.splice(fi, 1); tabs.splice(ti, 0, m); renderTabBar() } })
+    bar.insertBefore(el, btns)
+  })
+}
+function renderViewport() {
+  const vp = document.getElementById('viewport')
+  tabs.forEach(t => {
+    let f = document.getElementById('frame-' + t.id)
+    const isActive = t.id === activeId
+    if (!f) { f = document.createElement('div'); f.id = 'frame-' + t.id; f.className = 'tab-frame'; vp.appendChild(f) }
+    f.classList.toggle('active', isActive)
+    if (isActive && !f._hasContent) { renderFrame(t, f); f._hasContent = true }
+    if (!isActive && f._mat) { cancelAnimationFrame(f._mat); f._mat = null }
+  })
+  Array.from(vp.children).forEach(el => { const fid = parseFloat(el.id.replace('frame-', '')); if (!tabs.find(t => t.id === fid)) el.remove() })
+}
+
+function renderFrame(tab, frame) {
+  if (frame._mat) { cancelAnimationFrame(frame._mat); frame._mat = null }
+  if (frame._bi) { clearInterval(frame._bi); frame._bi = null }
+  if (!tab.url) { frame.innerHTML = buildHome(); initMatrix(frame); initHomeSearch(frame); return }
+  frame.innerHTML = ''
+  const wv = document.createElement('webview')
+  wv.className = 'page-webview'; wv.id = 'wv-' + tab.id
+  wv.setAttribute('src', tab.url)
+  wv.setAttribute('partition', 'incognito')
+  // ✅ DÜZELTME: nativeWindowOpen=no eklendi
+  wv.setAttribute('webpreferences', 'javascript=yes,contextIsolation=yes,nodeIntegration=no,nativeWindowOpen=no')
+  frame.appendChild(wv)
+  wv.addEventListener('did-start-loading', () => { if (tab.id === activeId) setProgress(30); document.querySelector('#tabbar .tab.active')?.classList.add('loading') })
+  wv.addEventListener('did-stop-loading', () => { if (tab.id === activeId) setProgress(100); document.querySelectorAll('.tab').forEach(e => e.classList.remove('loading')); document.getElementById('btn-reload').classList.remove('spinning') })
+  wv.addEventListener('page-title-updated', e => { const t = getTab(tab.id); if (t) { t.title = e.title.substring(0, 16).toUpperCase(); renderTabBar() } })
+  wv.addEventListener('did-navigate', e => {
+    if (isSafeUrl(e.url) && tab.id === activeId) { document.getElementById('addr-input').value = e.url; const t = getTab(tab.id); if (t) t.url = e.url; setProgress(70) }
+  })
+  wv.addEventListener('did-navigate-in-page', e => { if (tab.id === activeId) document.getElementById('addr-input').value = e.url })
+  // ✅ DÜZELTME: new-window handler güçlendirildi - e.preventDefault() eklendi
+  wv.addEventListener('new-window', e => {
+    e.preventDefault()
+    if (e.url && (e.url.startsWith('http://') || e.url.startsWith('https://')) && isSafeUrl(e.url)) {
+      newTab(e.url)
+    }
+  })
+  wv.addEventListener('did-finish-load', async () => {
+    updateNavBtns(); wv.setZoomFactor(zoom / 100)
+    try { const fp = await eAPI.invoke('get-fp-script'); if (fp) wv.executeJavaScript(fp).catch(() => {}) } catch {}
+  })
+}
+
+function initHomeSearch(frame) {
+  requestAnimationFrame(() => {
+    const inp = frame.querySelector('#home-search-input')
+    const btn = frame.querySelector('.hs-btn')
+    if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') doHomeSearch(inp.value) })
+    if (btn) btn.onclick = () => doHomeSearch(inp?.value || '')
+  })
+}
+function doHomeSearch(q) {
+  q = (q || '').trim(); if (!q) return
+  let url
+  if (q.startsWith('http') && isSafeUrl(q)) url = q
+  else if (q.includes('.')) url = 'https://' + q
+  else url = 'https://duckduckgo.com/?q=' + encodeURIComponent(q) + '&kae=d&k1=-1&kp=-2&kav=1'
+  if (isSafeUrl(url)) loadUrl(activeId, url)
+}
+
+function buildHome() {
+  return `<div class="home-screen">
+    <canvas id="matrix"></canvas>
+    <div class="ghost-eye">👁</div>
+    <div class="ghost-logo">MIAU</div>
+    <div class="ghost-sub">INCOGNITO — <span>ACTIVE_</span></div>
+    <div class="ghost-sub-he">Private Mode — Active / מצב פרטי פעיל</div>
+    <div class="warn-box">
+      <div class="warn-title">// INCOGNITO / גלישה פרטית</div>
+      <div class="warn-text">History, cookies and form data<br>will <span>not be saved</span> on this device. / לא יישמרו במכשיר זה.</div>
+      <div class="warn-text-he">History, cookies and form data will not be saved. / ההיסטוריה, העוגיות ונתוני הטפסים לא יישמרו.</div>
+    </div>
+    <div class="home-search">
+      <span class="hs-icon">👁</span>
+      <input id="home-search-input" type="text" placeholder="Private search / חיפוש פרטי…" autocomplete="off" spellcheck="false"/>
+      <div class="hs-btn">[GO / לך]</div>
+    </div>
+    <div class="credit">◈ by <span>leopanoriginal</span> ◈</div>
+  </div>`
+}
+
+function navigate() {
+  let u = document.getElementById('addr-input').value.trim(); if (!u) return
+  document.getElementById('btn-reload').classList.add('spinning')
+  if (!u.startsWith('http') && !u.startsWith('file:') && !u.includes('localhost'))
+    u = u.includes('.') ? 'https://' + u : 'https://duckduckgo.com/?q=' + encodeURIComponent(u) + '&kae=d&k1=-1&kp=-2&kav=1'
+  if (isSafeUrl(u)) loadUrl(activeId, u)
+}
+function loadUrl(id, u) {
+  if (!isSafeUrl(u)) { notify('⚠ כתובת לא בטוחה / Unsafe URL'); return }
+  const t = getTab(id); if (!t) return
+  t.url = u; t.title = shortTitle(u).toUpperCase(); t.icon = '👁'
+  refreshFrame(id)
+  if (id === activeId) { document.getElementById('addr-input').value = u; updateNavBtns(); renderTabBar() }
+}
+function refreshFrame(id) {
+  const f = document.getElementById('frame-' + id), t = getTab(id); if (!f || !t) return
+  f._hasContent = false; renderFrame(t, f); f._hasContent = true
+}
+function navBack() { const wv = getWebview(); if (wv && wv.canGoBack()) wv.goBack() }
+function navFwd() { const wv = getWebview(); if (wv && wv.canGoForward()) wv.goForward() }
+function navReload() { document.getElementById('btn-reload').classList.add('spinning'); const wv = getWebview(); if (wv) wv.reload(); else refreshFrame(activeId) }
+function goHome() { const t = getTab(activeId); if (!t) return; t.url = null; t.title = 'INCOGNITO / פרטי'; t.icon = '👁'; refreshFrame(activeId); document.getElementById('addr-input').value = ''; renderTabBar() }
+function getWebview() { return document.getElementById('wv-' + activeId) }
+function updateNavBtns() { const wv = getWebview(); document.getElementById('btn-back').style.opacity = (!wv || !wv.canGoBack()) ? .3 : 1; document.getElementById('btn-fwd').style.opacity = (!wv || !wv.canGoForward()) ? .3 : 1 }
+document.getElementById('addr-input').addEventListener('keydown', e => { if (e.key === 'Enter') navigate() })
+
+document.getElementById('inc-min')?.addEventListener('click', () => eAPI.send('inc-minimize'))
+document.getElementById('inc-max')?.addEventListener('click', () => eAPI.send('inc-maximize'))
+document.getElementById('inc-cls')?.addEventListener('click', () => eAPI.send('inc-close'))
+document.getElementById('inc-fs')?.addEventListener('click', toggleFullscreen)
+document.getElementById('btn-new-tab-inc')?.addEventListener('click', () => newTab())
+document.getElementById('btn-back')?.addEventListener('click', navBack)
+document.getElementById('btn-fwd')?.addEventListener('click', navFwd)
+document.getElementById('btn-reload')?.addEventListener('click', navReload)
+document.getElementById('btn-home-inc')?.addEventListener('click', goHome)
+document.getElementById('go-btn')?.addEventListener('click', navigate)
+document.getElementById('btn-zoom-out-inc')?.addEventListener('click', () => toggleZoom(-1))
+document.getElementById('btn-zoom-in-inc')?.addEventListener('click', () => toggleZoom(1))
+document.getElementById('btn-find-inc')?.addEventListener('click', toggleFind)
+document.getElementById('find-next-inc')?.addEventListener('click', findNext)
+document.getElementById('find-prev-inc')?.addEventListener('click', findPrev)
+document.getElementById('find-close-inc')?.addEventListener('click', closeFind)
+newTab()
+</script>
+</body>
+</html>
